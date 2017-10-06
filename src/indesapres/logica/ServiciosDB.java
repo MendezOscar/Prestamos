@@ -81,7 +81,7 @@ public class ServiciosDB {
     }
     
     public void deleteCliente(String id) throws SQLException {
-        Clientes clie = findById(id);
+        Clientes clie = findByIdClientes(id);
         if (clie == null) {
             JOptionPane.showMessageDialog(null, "Codigo de cliente: " + id + " no existe.");
         }
@@ -95,7 +95,7 @@ public class ServiciosDB {
         }
     }
 
-     public Clientes findById(String id) throws SQLException {
+     public Clientes findByIdClientes(String id) throws SQLException {
         String query = "SELECT * FROM CLIENTES WHERE IDCLIENTE = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, id);
@@ -113,7 +113,7 @@ public class ServiciosDB {
         return null;
     }
      
-     public List<Clientes> findAll() throws SQLException {
+     public List<Clientes> findAllClientes() throws SQLException {
         try (Statement stmt = con.createStatement()) {
             String query = "SELECT * FROM CLIENTES";
             ResultSet rs = stmt.executeQuery(query);
@@ -135,7 +135,7 @@ public class ServiciosDB {
      
      public void createPrestamos(Prestamos pres){
         String query = "INSERT INTO PRESTAMOS "
-                + "(IDPRESTAMO, FECHA, INTERESANUAL, INTERESACUMULADO, PLAZO, TOTALINTERESES, CAPITALINTERES, DEDUCCION, ABONOCAPITAL, INTERESGANADO, IDCLIENTE) "
+                + "(IDPRESTAMO, FECHA, INTERESANUAL, INTERESACUMULADO, PLAZO, TOTALINTERESES, CAPITALINTERES, DEDUCCION, ABONOCAPITAL, INTERESGANADO, IDCLIENTE, PRESTAMO) "
                 + "VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, pres.getIdPrestamo());
@@ -149,10 +149,87 @@ public class ServiciosDB {
             stmt.setFloat(9, pres.getAbonocapital());
             stmt.setFloat(10, pres.getInteresganado());
             stmt.setString(11, pres.getIdCliente());
+            stmt.setFloat(10, pres.getPrestamos());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null," El Cliente: " + pres.getIdPrestamo() +" se ha guardado Exitosamente.");
         } catch (SQLException se) {
             JOptionPane.showMessageDialog(null, "Error El Cliente: " + pres.getIdPrestamo() +" no se ha guardado Exitosamente.");
         }
     }
+     
+    public void updatePrestamo(String id, Prestamos pres) throws SQLException {
+        String query = "UPDATE PRESTAMOS "
+                + "SET FECHA= ?, INETERESANUAL= ?, INTERESACUMULADO= ?, PLAZO= ?, TOTALINTERESES= ?, CAPITALINTERES= ?, DEDUCCION= ?, ABONOCAPITAL= ?, INTERESGANADO= ?, IDCLIENTE= ?, PRESTAMO= ?"
+                + "WHERE IDPRESTAMO= ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, pres.getFecha());
+            stmt.setFloat(2, pres.getInteresanual());
+            stmt.setFloat(3, pres.getInteresAcumulado());
+            stmt.setInt(4, pres.getPlazo());
+            stmt.setFloat(5, pres.getTotalinteres());
+            stmt.setFloat(6, pres.getCapitalinteres());
+            stmt.setFloat(7, pres.getDeduccion());
+            stmt.setFloat(8, pres.getAbonocapital());
+            stmt.setFloat(9, pres.getInteresganado());
+            stmt.setString(10, pres.getIdCliente());
+            stmt.setFloat(11, pres.getPrestamos());
+            stmt.setString(12, pres.getIdPrestamo());
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "El Prestamo: " + id + " se ha actualizado correctamente.");
+        } catch (SQLException se) {
+            System.out.println(se.toString());
+            JOptionPane.showMessageDialog(null, "ERROR El Prestamo: " + id + " no ha actualizado correctamente.");
+        }
+    }
+    
+    public void deletePrestamo(String id) throws SQLException {
+        Prestamos pres = findByIdPrestamos(id);
+        if (pres == null) {
+            JOptionPane.showMessageDialog(null, "Codigo de cliente: " + id + " no existe.");
+        }
+        String query = "DELETE FROM PRESTAMOS WHERE IDPRESTAMO= ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {  
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Codigo de prestamo: " + id + "se ha borrado.");
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(null, "ERROR Codigo de prestamo: " + id + "no se ha borrado.");
+        }
+    }
+
+    private Prestamos findByIdPrestamos(String id) {
+        String query = "SELECT * FROM PRESTAMOS WHERE IDPRESTAMO = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return (new Prestamos(rs.getString("IDPRESTAMO"),rs.getString("FECHA"), rs.getFloat("INTERESANUAL"), 
+                    rs.getFloat("INTERESACUMULADO"), rs.getInt("PLAZO"), rs.getFloat("TOTALINTERESES"),
+                    rs.getFloat("CAPITALINTERES"), rs.getFloat("DEDUCCION"), rs.getFloat("ABONOCAPITAL"),
+                    rs.getFloat("INTERESGANADO"), rs.getString("IDCLIENTE"), rs.getFloat("PRESTAMO")));
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(null, "ERROR Codigo de Prestamo: " + id + "no se ha encontrado.");
+        }
+        return null;
+    }
+    
+    public List<Prestamos> findAllPrestamos() throws SQLException {
+        try (Statement stmt = con.createStatement()) {
+            String query = "SELECT * FROM PRESTAMOS";
+            ResultSet rs = stmt.executeQuery(query);
+            ArrayList<Prestamos> depts = new ArrayList<>();
+            while (rs.next()) {
+                depts.add(new Prestamos(rs.getString("IDPRESTAMO"),rs.getString("FECHA"), rs.getFloat("INTERESANUAL"), 
+                    rs.getFloat("INTERESACUMULADO"), rs.getInt("PLAZO"), rs.getFloat("TOTALINTERESES"),
+                    rs.getFloat("CAPITALINTERES"), rs.getFloat("DEDUCCION"), rs.getFloat("ABONOCAPITAL"),
+                    rs.getFloat("INTERESGANADO"), rs.getString("IDCLIENTE"), rs.getFloat("PRESTAMO")));
+            }
+            return depts;
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(null, "ERROR.");
+        }
+        return null;
+    } 
 }

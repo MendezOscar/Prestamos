@@ -17,8 +17,9 @@ public class Prestamos {
     float Abonocapital;
     float Interesganado;
     String idCliente;
+    float Prestamos;
 
-    public Prestamos(String idPrestamo, String Fecha, float Interesanual, float InteresAcumulado, int Plazo, float Totalinteres, float Capitalinteres, float Deduccion, float Abonocapital, float Interesganado, String idCliente) {
+    public Prestamos(String idPrestamo, String Fecha, float Interesanual, float InteresAcumulado, int Plazo, float Totalinteres, float Capitalinteres, float Deduccion, float Abonocapital, float Interesganado, String idCliente, float Prestamos) {
         this.idPrestamo = idPrestamo;
         this.Fecha = Fecha;
         this.Interesanual = Interesanual;
@@ -30,7 +31,18 @@ public class Prestamos {
         this.Abonocapital = Abonocapital;
         this.Interesganado = Interesganado;
         this.idCliente = idCliente;
+        this.Prestamos = Prestamos;
     }
+
+    public float getPrestamos() {
+        return Prestamos;
+    }
+
+    public void setPrestamos(float Prestamos) {
+        this.Prestamos = Prestamos;
+    }
+
+    
 
     public String getIdPrestamo() {
         return idPrestamo;
