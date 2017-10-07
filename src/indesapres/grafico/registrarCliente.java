@@ -70,7 +70,9 @@ public class registrarCliente extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -82,7 +84,7 @@ public class registrarCliente extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        jLabel23 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -133,9 +135,17 @@ public class registrarCliente extends javax.swing.JFrame {
         jLabel22.setText("......");
         jToolBar1.add(jLabel22);
 
+        jLabel23.setForeground(new java.awt.Color(204, 204, 255));
+        jLabel23.setText("......");
+        jToolBar1.add(jLabel23);
+
         jLabel24.setForeground(new java.awt.Color(204, 204, 255));
         jLabel24.setText("......");
         jToolBar1.add(jLabel24);
+
+        jLabel27.setForeground(new java.awt.Color(204, 204, 255));
+        jLabel27.setText("......");
+        jToolBar1.add(jLabel27);
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\save.png")); // NOI18N
@@ -258,9 +268,9 @@ public class registrarCliente extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton6);
 
-        jLabel23.setForeground(new java.awt.Color(204, 204, 255));
-        jLabel23.setText("......");
-        jToolBar1.add(jLabel23);
+        jLabel26.setForeground(new java.awt.Color(204, 204, 255));
+        jLabel26.setText("......");
+        jToolBar1.add(jLabel26);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel1.setText("CODIGO");
@@ -342,7 +352,7 @@ public class registrarCliente extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
+                        .addComponent(jDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -364,7 +374,7 @@ public class registrarCliente extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jidCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                                        .addComponent(jidCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                                         .addGap(398, 398, 398))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel3)
@@ -373,12 +383,12 @@ public class registrarCliente extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jIdentidad, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                                        .addComponent(jIdentidad, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                                         .addGap(346, 346, 346))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE))))
+                                        .addComponent(jNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -394,11 +404,11 @@ public class registrarCliente extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                .addComponent(jTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                                .addComponent(jEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                                 .addGap(133, 133, 133)))
                         .addGap(26, 26, 26)))
                 .addContainerGap())
@@ -454,7 +464,7 @@ public class registrarCliente extends javax.swing.JFrame {
                     .addComponent(jGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(jProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -608,6 +618,8 @@ public class registrarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

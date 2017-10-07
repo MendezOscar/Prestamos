@@ -1,14 +1,36 @@
 
 package indesapres.grafico;
 
+import indesapres.modelos.Prestamos;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author oscme
  */
 public class registrarPrestamo extends javax.swing.JFrame {
-
+    DefaultTableModel tm;
     public registrarPrestamo() {
+        this.tm = (DefaultTableModel) jTable2.getModel();
         initComponents();
+    }
+    
+    public Prestamos enviarDatos(){
+        Prestamos pres;
+        String idPrestamo = jCodigo.getText();
+        String fecha = jDate.getDate().toString();
+        String idCliente = jCodigo1.getText();
+        float prestamo = Float.parseFloat(String.valueOf(tm.getValueAt(0, 0)));
+        float porInteresanual = Float.parseFloat(String.valueOf(tm.getValueAt(0,2)));
+        float porInteresAcumulado = Float.parseFloat(String.valueOf(tm.getValueAt(0,3)));
+        int plazo = Integer.parseInt(String.valueOf(tm.getValueAt(0,1)));
+        float totalIntereses = Float.parseFloat(String.valueOf(tm.getValueAt(0,4)));
+        float capitalInteres = Float.parseFloat(String.valueOf(tm.getValueAt(0,5)));
+        float deduccion = Float.parseFloat(String.valueOf(tm.getValueAt(0,6)));
+        float abonocapital = Float.parseFloat(String.valueOf(tm.getValueAt(0,7)));
+        float interesGanado = Float.parseFloat(String.valueOf(tm.getValueAt(0,8)));
+        pres = new Prestamos(idPrestamo, fecha, porInteresanual, porInteresAcumulado, plazo, totalIntereses, capitalInteres, deduccion, abonocapital, interesGanado, idCliente, prestamo);
+        return pres;
     }
 
     @SuppressWarnings("unchecked")
@@ -41,13 +63,13 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        JFecha = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jCodigo1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jCodigo2 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jDate = new com.toedter.calendar.JDateChooser();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -230,14 +252,6 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel3.setText("FECHA");
 
-        JFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        JFecha.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        JFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JFechaActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setText("CODIGO CLIENTE");
 
@@ -263,11 +277,11 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Prestmao", "% Interes Anual", "% Interes Acum.", "Plazo", "Total Interes Ganado", "Capital + Interes", "Deduccion", "Abono a Capital", "Interes Ganado"
+                "Prestamo", "Plazo", "% Interes Anual", "% Interes Acum.", "Total Interes Ganado", "Capital + Interes", "Deduccion", "Abono a Capital", "Interes Ganado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -275,6 +289,8 @@ public class registrarPrestamo extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable2);
+
+        jDate.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -301,12 +317,12 @@ public class registrarPrestamo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                                .addComponent(jCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(JFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                                .addGap(239, 239, 239)))
+                                .addComponent(jDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(230, 230, 230)))
                         .addGap(172, 172, 172)))
                 .addContainerGap())
         );
@@ -319,11 +335,12 @@ public class registrarPrestamo extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(JFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1)
+                                .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3))
+                            .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -369,10 +386,6 @@ public class registrarPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCodigoActionPerformed
 
-    private void JFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JFechaActionPerformed
-
     private void jCodigo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCodigo1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCodigo1ActionPerformed
@@ -417,7 +430,6 @@ public class registrarPrestamo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField JFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -427,6 +439,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JTextField jCodigo;
     private javax.swing.JTextField jCodigo1;
     private javax.swing.JTextField jCodigo2;
+    private com.toedter.calendar.JDateChooser jDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;

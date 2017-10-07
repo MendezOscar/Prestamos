@@ -45,10 +45,10 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
-        jMenu1.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\Cliente.png")); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\Cliente.png")); // NOI18N
         jMenu1.setText("Clientes");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\registrocliente.png")); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\registrocliente.png")); // NOI18N
         jMenuItem1.setText("Registro Cliente");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,36 +59,41 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\prestamo.png")); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\prestamo.png")); // NOI18N
         jMenu2.setText("Prestamos");
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\registroprestamo.png")); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\registroprestamo.png")); // NOI18N
         jMenuItem2.setText("Registro de prestamo");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\deduccion.png")); // NOI18N
+        jMenu3.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\deduccion.png")); // NOI18N
         jMenu3.setText("Deduccion");
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\registrodeduccion.png")); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\registrodeduccion.png")); // NOI18N
         jMenuItem3.setText("Registro de deduccion");
         jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\reporte.png")); // NOI18N
+        jMenu4.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\reporte.png")); // NOI18N
         jMenu4.setText("Reportes");
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\reporteCliente.png")); // NOI18N
+        jMenuItem4.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\reporteCliente.png")); // NOI18N
         jMenuItem4.setText("Clientes");
         jMenu4.add(jMenuItem4);
 
-        jMenuItem5.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\reporteDeducion.png")); // NOI18N
+        jMenuItem5.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\reporteDeducion.png")); // NOI18N
         jMenuItem5.setText("Deduccion");
         jMenu4.add(jMenuItem5);
 
-        jMenuItem6.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\INDESAPRES\\pictures\\reportePrestamo.png")); // NOI18N
+        jMenuItem6.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\reportePrestamo.png")); // NOI18N
         jMenuItem6.setText("Prestamos");
         jMenu4.add(jMenuItem6);
 
@@ -104,7 +109,7 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGap(0, 399, Short.MAX_VALUE)
         );
 
         pack();
@@ -115,6 +120,12 @@ public class Menu extends javax.swing.JFrame {
         registrarCliente rc = new registrarCliente();
         rc.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        registrarPrestamo rp = new registrarPrestamo();
+        rp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
