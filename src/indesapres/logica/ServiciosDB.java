@@ -136,7 +136,8 @@ public class ServiciosDB {
      public void createPrestamos(Prestamos pres){
         String query = "INSERT INTO PRESTAMOS "
                 + "(IDPRESTAMO, FECHA, INTERESANUAL, INTERESACUMULADO, PLAZO, TOTALINTERESES, CAPITALINTERES, DEDUCCION, ABONOCAPITAL, INTERESGANADO, IDCLIENTE, PRESTAMO) "
-                + "VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+         System.out.println(query);
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, pres.getIdPrestamo());
             stmt.setString(2, pres.getFecha());
@@ -149,17 +150,20 @@ public class ServiciosDB {
             stmt.setFloat(9, pres.getAbonocapital());
             stmt.setFloat(10, pres.getInteresganado());
             stmt.setString(11, pres.getIdCliente());
-            stmt.setFloat(10, pres.getPrestamos());
+            stmt.setFloat(12, pres.getPrestamos());
+            System.out.println(query);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null," El Cliente: " + pres.getIdPrestamo() +" se ha guardado Exitosamente.");
+            JOptionPane.showMessageDialog(null, " El Cliente: " + pres.getIdPrestamo() + " se ha guardado Exitosamente.");
         } catch (SQLException se) {
+            System.out.println(query);
+            System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "Error El Cliente: " + pres.getIdPrestamo() +" no se ha guardado Exitosamente.");
         }
     }
      
     public void updatePrestamo(String id, Prestamos pres) throws SQLException {
         String query = "UPDATE PRESTAMOS "
-                + "SET FECHA= ?, INETERESANUAL= ?, INTERESACUMULADO= ?, PLAZO= ?, TOTALINTERESES= ?, CAPITALINTERES= ?, DEDUCCION= ?, ABONOCAPITAL= ?, INTERESGANADO= ?, IDCLIENTE= ?, PRESTAMO= ?"
+                + "SET FECHA= ?, INTERESANUAL= ?, INTERESACUMULADO= ?, PLAZO= ?, TOTALINTERESES= ?, CAPITALINTERES= ?, DEDUCCION= ?, ABONOCAPITAL= ?, INTERESGANADO= ?, IDCLIENTE= ?, PRESTAMO= ?"
                 + "WHERE IDPRESTAMO= ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, pres.getFecha());
@@ -197,7 +201,7 @@ public class ServiciosDB {
         }
     }
 
-    private Prestamos findByIdPrestamos(String id) {
+    public Prestamos findByIdPrestamos(String id) {
         String query = "SELECT * FROM PRESTAMOS WHERE IDPRESTAMO = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, id);
