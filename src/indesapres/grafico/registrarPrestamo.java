@@ -28,14 +28,14 @@ public class registrarPrestamo extends javax.swing.JFrame {
         String fecha = jDate.getText();
         String idCliente = jCodigo1.getText();
         float prestamo = Float.parseFloat(jPrestamo.getText());
-        float porInteresanual = Float.parseFloat(String.valueOf(tm.getValueAt(0,0)));
-        float porInteresAcumulado = Float.parseFloat(String.valueOf(tm.getValueAt(0,1)));
+        float porInteresanual = Float.parseFloat(jporAnual.getText());
+        float porInteresAcumulado = Float.parseFloat(String.valueOf(tm.getValueAt(0,0)));
         int plazo = Integer.parseInt(jPlazo.getText());
-        float totalIntereses = Float.parseFloat(String.valueOf(tm.getValueAt(0,2)));
-        float capitalInteres = Float.parseFloat(String.valueOf(tm.getValueAt(0,3)));
-        float deduccion = Float.parseFloat(String.valueOf(tm.getValueAt(0,4)));
-        float abonocapital = Float.parseFloat(String.valueOf(tm.getValueAt(0,5)));
-        float interesGanado = Float.parseFloat(String.valueOf(tm.getValueAt(0,6)));
+        float totalIntereses = Float.parseFloat(String.valueOf(tm.getValueAt(0,1)));
+        float capitalInteres = Float.parseFloat(String.valueOf(tm.getValueAt(0,2)));
+        float deduccion = Float.parseFloat(String.valueOf(tm.getValueAt(0,3)));
+        float abonocapital = Float.parseFloat(String.valueOf(tm.getValueAt(0,4)));
+        float interesGanado = Float.parseFloat(String.valueOf(tm.getValueAt(0,5)));
         pres = new Prestamos(idPrestamo, fecha, porInteresanual, porInteresAcumulado, plazo, totalIntereses, capitalInteres, deduccion, abonocapital, interesGanado, idCliente, prestamo);
         return pres;
     }
@@ -47,13 +47,13 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jCodigo2.setText("");
         jPrestamo.setText("");
         jPlazo.setText("");
+        jporAnual.setText("");
         jTable2.setValueAt(0.0 ,0, 0);
         jTable2.setValueAt(0.0 ,0, 1);
         jTable2.setValueAt(0.0 ,0, 2);
         jTable2.setValueAt(0.0 ,0, 3);
         jTable2.setValueAt(0.0 ,0, 4);
         jTable2.setValueAt(0.0 ,0, 5);
-        jTable2.setValueAt(0.0 ,0, 6);
     }
     
     public void setearBusqueda(Prestamos pres){
@@ -63,13 +63,13 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jDate.setText(pres.getFecha());
         jPrestamo.setText(Float.toString(pres.getPrestamos()));
         jPlazo.setText(Integer.toString(pres.getPlazo()));
-        jTable2.setValueAt(pres.getInteresanual(), 0, 0);
-        jTable2.setValueAt(pres.getInteresAcumulado(), 0, 1);
-        jTable2.setValueAt(pres.getTotalinteres(), 0, 2);
-        jTable2.setValueAt(pres.getCapitalinteres(), 0, 3);
-        jTable2.setValueAt(pres.getDeduccion(), 0, 4);
-        jTable2.setValueAt(pres.getAbonocapital(), 0, 5);
-        jTable2.setValueAt(pres.getInteresganado(), 0, 6);
+        jporAnual.setText(Float.toString(pres.getInteresanual()));
+        jTable2.setValueAt(pres.getInteresAcumulado(), 0, 0);
+        jTable2.setValueAt(pres.getTotalinteres(), 0, 1);
+        jTable2.setValueAt(pres.getCapitalinteres(), 0, 2);
+        jTable2.setValueAt(pres.getDeduccion(), 0, 3);
+        jTable2.setValueAt(pres.getAbonocapital(), 0, 4);
+        jTable2.setValueAt(pres.getInteresganado(), 0, 5);
         buscarCliente();
     }
 
@@ -140,6 +140,8 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jPlazo = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jDate = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jporAnual = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -344,14 +346,14 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "% Interes Anual", "% Interes Acum.", "Total Interes Ganado", "Capital + Interes", "Deduccion", "Abono a Capital", "Interes Ganado"
+                "% Interes Acum.", "Total Interes Ganado", "Capital + Interes", "Deduccion", "Abono a Capital", "Interes Ganado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -405,6 +407,21 @@ public class registrarPrestamo extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel8.setText("% INTERES ANUAL");
+
+        jporAnual.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jporAnual.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jporAnualMouseClicked(evt);
+            }
+        });
+        jporAnual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jporAnualActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -446,8 +463,12 @@ public class registrarPrestamo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jporAnual, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
                         .addComponent(jButton7)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -479,7 +500,9 @@ public class registrarPrestamo extends javax.swing.JFrame {
                     .addComponent(jPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7))
+                    .addComponent(jButton7)
+                    .addComponent(jLabel8)
+                    .addComponent(jporAnual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                 .addContainerGap())
@@ -598,18 +621,17 @@ public class registrarPrestamo extends javax.swing.JFrame {
         }
         else {
             if (plazo <= 12) {
-                float Totalinteresganado = (float) (prestamo * 0.18);
+                float Totalinteresganado = (float) (prestamo * 0.20);
                 float Capitalinteres = prestamo + Totalinteresganado;
                 float deduccion = Capitalinteres /(plazo * 2);
                 float abonocapital = prestamo / (plazo * 2);
                 float interesganado = Totalinteresganado / (plazo * 2);
-                jTable2.setValueAt(18, 0, 0);
-                jTable2.setValueAt(0.0, 0, 1);
-                jTable2.setValueAt(Totalinteresganado, 0, 2);
-                jTable2.setValueAt(Capitalinteres, 0, 3);
-                jTable2.setValueAt(deduccion, 0, 4);
-                jTable2.setValueAt(abonocapital, 0, 5);
-                jTable2.setValueAt(interesganado, 0, 6);
+                jTable2.setValueAt(0.0, 0, 0);
+                jTable2.setValueAt(Totalinteresganado, 0, 1);
+                jTable2.setValueAt(Capitalinteres, 0, 2);
+                jTable2.setValueAt(deduccion, 0, 3);
+                jTable2.setValueAt(abonocapital, 0, 4);
+                jTable2.setValueAt(interesganado, 0, 5);
             }else{
                 
             }
@@ -642,6 +664,34 @@ public class registrarPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Sujeto a analisis");
         }
     }//GEN-LAST:event_jPlazoMouseClicked
+
+    private void jporAnualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jporAnualMouseClicked
+        // TODO add your handling code here:
+        int plazo = Integer.parseInt(jPlazo.getText());
+        float prestamo = Float.parseFloat(jPrestamo.getText());
+        if (plazo == 5 ){
+            int interesanual = 20;
+            jporAnual.setText(Integer.toString(interesanual));
+        }else if(plazo == 15 ){
+            int interesanual = 22;
+            jporAnual.setText(Integer.toString(interesanual));
+        } else if(plazo == 22 ){
+            int interesanual = 24;
+            jporAnual.setText(Integer.toString(interesanual));
+        } else if(plazo == 24 && (prestamo >= 50001 && prestamo <= 80000)){
+            int interesanual = 25;
+            jporAnual.setText(Integer.toString(interesanual));
+        } else if(plazo == 24 && (prestamo >= 80001 && prestamo <= 100000)){
+            int interesanual = 26;
+            jporAnual.setText(Integer.toString(interesanual));
+        } else {
+            JOptionPane.showMessageDialog(null, "Sujeto a analisis");
+        }
+    }//GEN-LAST:event_jporAnualMouseClicked
+
+    private void jporAnualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jporAnualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jporAnualActionPerformed
 
     /**
      * @param args the command line arguments
@@ -708,6 +758,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jPlazo;
     private javax.swing.JTextField jPrestamo;
     private javax.swing.JScrollPane jScrollPane1;
@@ -715,5 +766,6 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField jporAnual;
     // End of variables declaration//GEN-END:variables
 }
