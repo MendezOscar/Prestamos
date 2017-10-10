@@ -5,6 +5,7 @@ import indesapres.logica.ServiciosDB;
 import indesapres.modelos.Clientes;
 import indesapres.modelos.Prestamos;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -662,13 +663,29 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 jTable2.setValueAt(interesganado, 0, 5);
             }else{
                 float interesAcumulado;
-                System.out.println("plazo: " + plazo);
-                double anio = plazo / 12;
+                float anio = plazo / 12;
                 DecimalFormat df = new DecimalFormat("#.#");
                 df.format(anio);
                 int mes = obtenermes(anio);
-                System.out.println("anio: " + anio);
-                System.out.println("mes : " + mes);
+                float totalmes = (float) 12.0;
+                float porMes = (obtenerInteres(interesAnual) / totalmes) * mes;
+                Math.round(porMes);
+                int year = (int) Math.floor(anio);
+                int obInteres = obtenerInteres(interesAnual);
+                interesAcumulado = (obInteres * year) + porMes;
+                float iporcentaje = convertirInteres(interesAcumulado);
+                System.out.println("iporcentaje: " + iporcentaje);
+                float Totalinteresganado = prestamo * iporcentaje;
+                float capitalInteres = prestamo + Totalinteresganado;
+                float deduccion = capitalInteres / (plazo * 2);
+                float abonoCapital = prestamo / (plazo * 2);
+                double interesganado = Totalinteresganado / (plazo *2);
+                jTable2.setValueAt(interesAcumulado, 0, 0);
+                jTable2.setValueAt(Totalinteresganado, 0, 1);
+                jTable2.setValueAt(capitalInteres, 0, 2);
+                jTable2.setValueAt(deduccion, 0, 3);
+                jTable2.setValueAt(abonoCapital, 0, 4);
+                jTable2.setValueAt(interesganado, 0, 5);
             }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -829,14 +846,60 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JTextField jporAnual;
     // End of variables declaration//GEN-END:variables
 
-    private int obtenermes(double anio) {
-        int mes = 0;
+    public int obtenermes(double anio) {
+        int mes;
         String montoEnLetras = Double.toString(anio); 
-        System.out.println("letras" + montoEnLetras);
         String[] nums = montoEnLetras.split("\\.");
         String montoEnLetrasDecimal = nums[1];
-        System.out.println("split: " + montoEnLetrasDecimal);
         mes = Integer.parseInt(montoEnLetrasDecimal);
+        switch (mes) {
+            case 1:
+                mes = 2;
+                return mes;
+            case 2:
+                mes = 3;
+                return mes;
+            case 3:
+                mes = 4;
+                return mes;
+            case 4:
+                mes = 5;
+                return mes;
+            case 5:
+                mes = 6;
+                return mes;
+            case 6:
+                mes = 7;
+                return mes;
+            case 8:
+                mes = 9;
+                return mes;
+            case 9:
+                mes = 10;
+                return mes;
+            case 0:
+                mes = 1;
+                return mes;
+            default:
+                break;
+        }
         return mes;
+    }
+    
+    public int obtenerInteres(float year) {
+        BigDecimal number = new BigDecimal(year);
+        int iPart = number.intValue();
+        return iPart;
+    }
+    
+    public float convertirInteres(float interes) {
+        float cinteres;
+        BigDecimal number = new BigDecimal(interes);
+        int iPart = number.intValue();
+        BigDecimal fraccion = number.remainder(BigDecimal.ONE);
+        String interesletras = "0." + iPart + fraccion;
+        cinteres = Float.parseFloat(interesletras);
+        System.out.println("cinteres: " + cinteres);
+        return cinteres;
     }
 }
