@@ -611,6 +611,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         this.tm = (DefaultTableModel) jTable2.getModel();
+        float interesAnual = Float.parseFloat(jporAnual.getText());
         float prestamo = Float.parseFloat(jPrestamo.getText());
         int plazo = Integer.parseInt(jPlazo.getText());
         if (prestamo == 0.0) {
@@ -621,7 +622,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         }
         else {
             if (plazo <= 12) {
-                float Totalinteresganado = (float) (prestamo * 0.20);
+                float Totalinteresganado = (float) (prestamo * interesAnual);
                 float Capitalinteres = prestamo + Totalinteresganado;
                 float deduccion = Capitalinteres /(plazo * 2);
                 float abonocapital = prestamo / (plazo * 2);
@@ -670,20 +671,20 @@ public class registrarPrestamo extends javax.swing.JFrame {
         int plazo = Integer.parseInt(jPlazo.getText());
         float prestamo = Float.parseFloat(jPrestamo.getText());
         if (plazo == 5 ){
-            int interesanual = 20;
-            jporAnual.setText(Integer.toString(interesanual));
+            float interesanual = (float) 0.20;
+            jporAnual.setText(Float.toString(interesanual));
         }else if(plazo == 15 ){
-            int interesanual = 22;
-            jporAnual.setText(Integer.toString(interesanual));
+            float interesanual = (float) 0.22;
+            jporAnual.setText(Float.toString(interesanual));
         } else if(plazo == 22 ){
-            int interesanual = 24;
-            jporAnual.setText(Integer.toString(interesanual));
+            float interesanual = (float) 0.24;
+            jporAnual.setText(Float.toString(interesanual));
         } else if(plazo == 24 && (prestamo >= 50001 && prestamo <= 80000)){
-            int interesanual = 25;
-            jporAnual.setText(Integer.toString(interesanual));
+            float interesanual = (float) 0.25;
+            jporAnual.setText(Float.toString(interesanual));
         } else if(plazo == 24 && (prestamo >= 80001 && prestamo <= 100000)){
-            int interesanual = 26;
-            jporAnual.setText(Integer.toString(interesanual));
+            float interesanual = (float) 0.26;
+            jporAnual.setText(Float.toString(interesanual));
         } else {
             JOptionPane.showMessageDialog(null, "Sujeto a analisis");
         }

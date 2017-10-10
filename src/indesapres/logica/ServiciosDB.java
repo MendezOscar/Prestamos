@@ -1,6 +1,7 @@
 package indesapres.logica;
 
 import indesapres.modelos.Clientes;
+import indesapres.modelos.Deducciones;
 import indesapres.modelos.Prestamos;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -155,8 +156,6 @@ public class ServiciosDB {
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, " El Cliente: " + pres.getIdPrestamo() + " se ha guardado Exitosamente.");
         } catch (SQLException se) {
-            System.out.println(query);
-            System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "Error El Cliente: " + pres.getIdPrestamo() +" no se ha guardado Exitosamente.");
         }
     }
@@ -229,6 +228,90 @@ public class ServiciosDB {
                     rs.getFloat("INTERESACUMULADO"), rs.getInt("PLAZO"), rs.getFloat("TOTALINTERESES"),
                     rs.getFloat("CAPITALINTERES"), rs.getFloat("DEDUCCION"), rs.getFloat("ABONOCAPITAL"),
                     rs.getFloat("INTERESGANADO"), rs.getString("IDCLIENTE"), rs.getFloat("PRESTAMO")));
+            }
+            return depts;
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(null, "ERROR.");
+        }
+        return null;
+    } 
+    
+    // Deducciones ----------------------------------------------------------------------------------
+    
+    public void createDeduccion(Deducciones ded){
+        String query = "INSERT INTO DEDUCCION "
+                + "(IDDEDUCCION, FECHA, IDPRESTAMO, SALDO) "
+                + "VALUES (? , ? , ?, ?)";
+         System.out.println(query);
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, ded.getIdDeduccion());
+            stmt.setString(2, ded.getFecha());
+            stmt.setString(3, ded.getIdPrestamo());
+            stmt.setFloat(4, ded.getSaldo());
+            System.out.println(query);
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, " La Deduccion: " + ded.getIdDeduccion() + " se ha guardado Exitosamente.");
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(null, "Error La Deduccion: " + ded.getIdDeduccion()  +" no se ha guardado Exitosamente.");
+        }
+    }
+    
+     public void updateDeduccion(String id, Deducciones ded) throws SQLException {
+        String query = "UPDATE DEDUCCION "
+                + "SET FECHA= ?, IDPRESTAMO= ?, SALDO= ?"
+                + "WHERE IDDEDUCCION= ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, ded.getFecha());
+            stmt.setString(2, ded.getIdPrestamo());
+            stmt.setFloat(3, ded.getSaldo());
+            stmt.setString(4, ded.getIdDeduccion());
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "La deduccion: " + id + " se ha actualizado correctamente.");
+        } catch (SQLException se) {
+            System.out.println(se.toString());
+            JOptionPane.showMessageDialog(null, "ERROR La deduccion: " + id + " no ha actualizado correctamente.");
+        }
+    }
+    
+     public void deleteDeduccion(String id) throws SQLException {
+        Deducciones ded = findByIdDeduccion(id);
+        if (ded == null) {
+            JOptionPane.showMessageDialog(null, "Codigo de Deduccion: " + id + " no existe.");
+        }
+        String query = "DELETE FROM DEDUCCION WHERE IDDEDUCCION= ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {  
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Deduccion de prestamo: " + id + "se ha borrado.");
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(null, "ERROR Deduccion de prestamo: " + id + "no se ha borrado.");
+        }
+    }
+
+    public Deducciones findByIdDeduccion(String id) {
+        String query = "SELECT * FROM DEDUCCION WHERE IDDEDUCCION = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return (new Deducciones(rs.getString("IDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
+                    rs.getFloat("SALDO")));
+        } catch (SQLException se) {
+            JOptionPane.showMessageDialog(null, "ERROR Codigo de Deduccion: " + id + "no se ha encontrado.");
+        }
+        return null;
+    } 
+    
+    public List<Deducciones> findAllDeducciones() throws SQLException {
+        try (Statement stmt = con.createStatement()) {
+            String query = "SELECT * FROM DEDUCCION";
+            ResultSet rs = stmt.executeQuery(query);
+            ArrayList<Deducciones> depts = new ArrayList<>();
+            while (rs.next()) {
+                depts.add(new Deducciones(rs.getString("IDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
+                    rs.getFloat("SALDO")));
             }
             return depts;
         } catch (SQLException se) {
