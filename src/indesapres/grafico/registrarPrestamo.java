@@ -4,7 +4,11 @@ package indesapres.grafico;
 import indesapres.logica.ServiciosDB;
 import indesapres.modelos.Clientes;
 import indesapres.modelos.Prestamos;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,13 +20,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class registrarPrestamo extends javax.swing.JFrame {
     public DefaultTableModel tm;
+    Date fechaActual;
     
     public registrarPrestamo() {
-        
         initComponents();
+        setearFecha();
     }
     
-    public Prestamos enviarDatos(){
+    public void setearFecha() {
+        fechaActual = new Date();
+        jDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(fechaActual));
+    }
+
+    public Prestamos enviarDatos() {
         Prestamos pres;
         String idPrestamo = jCodigo.getText();
         String fecha = jDate.getText();
@@ -142,6 +152,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jDate = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jporAnual = new javax.swing.JTextField();
+        jButton8 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -312,12 +323,17 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\PrestamoGrande.png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel1.setText("CODIGO");
+        jLabel1.setText("CODIGO DEL PRESTAMO");
 
         jCodigo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCodigoActionPerformed(evt);
+            }
+        });
+        jCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCodigoKeyPressed(evt);
             }
         });
 
@@ -401,6 +417,11 @@ public class registrarPrestamo extends javax.swing.JFrame {
         });
 
         jDate.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jDate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jDateMouseClicked(evt);
+            }
+        });
         jDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDateActionPerformed(evt);
@@ -422,6 +443,9 @@ public class registrarPrestamo extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jButton8.setText("Buscar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -431,46 +455,48 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCodigo1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCodigo1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                .addGap(359, 359, 359))
+                                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(237, 237, 237))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCodigo2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
+                                .addComponent(jCodigo2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                                .addGap(172, 172, 172))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDate, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                                .addGap(166, 166, 166)))
-                        .addGap(172, 172, 172))
+                                .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jporAnual, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton7)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jporAnual, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(jButton7)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -482,19 +508,20 @@ public class registrarPrestamo extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -503,8 +530,8 @@ public class registrarPrestamo extends javax.swing.JFrame {
                     .addComponent(jButton7)
                     .addComponent(jLabel8)
                     .addComponent(jporAnual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -613,7 +640,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         this.tm = (DefaultTableModel) jTable2.getModel();
         float interesAnual = Float.parseFloat(jporAnual.getText());
         float prestamo = Float.parseFloat(jPrestamo.getText());
-        int plazo = Integer.parseInt(jPlazo.getText());
+        float plazo = Float.parseFloat(jPlazo.getText());
         if (prestamo == 0.0) {
             JOptionPane.showMessageDialog(null, "Introduzca la cantidad del prestamo");
         }
@@ -634,7 +661,14 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 jTable2.setValueAt(abonocapital, 0, 4);
                 jTable2.setValueAt(interesganado, 0, 5);
             }else{
-                
+                float interesAcumulado;
+                System.out.println("plazo: " + plazo);
+                double anio = plazo / 12;
+                DecimalFormat df = new DecimalFormat("#.#");
+                df.format(anio);
+                int mes = obtenermes(anio);
+                System.out.println("anio: " + anio);
+                System.out.println("mes : " + mes);
             }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -694,6 +728,30 @@ public class registrarPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jporAnualActionPerformed
 
+    private void jCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCodigoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            String id = jCodigo.getText();
+        if("".equals(id)){
+            JOptionPane.showMessageDialog(null, "Ingrese codigo");
+        }else{
+            Prestamos pres;
+            ServiciosDB service = new ServiciosDB();
+            pres = service.findByIdPrestamos(id);
+            if (pres != null) {
+                setearBusqueda(pres);
+            } else {
+                JOptionPane.showMessageDialog(null, "El Prestamo: " + id + " no existe");
+            }
+        }
+        }
+    }//GEN-LAST:event_jCodigoKeyPressed
+
+    private void jDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDateMouseClicked
+        // TODO add your handling code here:
+        setearFecha();
+    }//GEN-LAST:event_jDateMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -735,6 +793,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JTextField jCodigo;
     private javax.swing.JTextField jCodigo1;
     private javax.swing.JTextField jCodigo2;
@@ -769,4 +828,15 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField jporAnual;
     // End of variables declaration//GEN-END:variables
+
+    private int obtenermes(double anio) {
+        int mes = 0;
+        String montoEnLetras = Double.toString(anio); 
+        System.out.println("letras" + montoEnLetras);
+        String[] nums = montoEnLetras.split("\\.");
+        String montoEnLetrasDecimal = nums[1];
+        System.out.println("split: " + montoEnLetrasDecimal);
+        mes = Integer.parseInt(montoEnLetrasDecimal);
+        return mes;
+    }
 }

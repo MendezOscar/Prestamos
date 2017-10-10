@@ -5,7 +5,10 @@ import indesapres.logica.ServiciosDB;
 import indesapres.modelos.Clientes;
 import indesapres.modelos.Deducciones;
 import indesapres.modelos.Prestamos;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,8 +21,15 @@ import javax.swing.table.DefaultTableModel;
 public class registrarDeduccion extends javax.swing.JFrame {
     
     public DefaultTableModel tm;
+    Date fechaActual;
     public registrarDeduccion() {
         initComponents();
+        setearFecha();
+    }
+    
+    public void setearFecha() {
+        fechaActual = new Date();
+        jFecha.setText(new SimpleDateFormat("dd/MM/yyyy").format(fechaActual));
     }
     
     public Deducciones enviarDatos(){
@@ -374,6 +384,11 @@ public class registrarDeduccion extends javax.swing.JFrame {
                 jidPrestamoActionPerformed(evt);
             }
         });
+        jidPrestamo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jidPrestamoKeyPressed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("CODIGO DEL DEDUCCION");
@@ -384,11 +399,21 @@ public class registrarDeduccion extends javax.swing.JFrame {
                 jidDeduccionActionPerformed(evt);
             }
         });
+        jidDeduccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jidDeduccionKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel3.setText("FECHA");
 
         jFecha.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jFechaMouseClicked(evt);
+            }
+        });
         jFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFechaActionPerformed(evt);
@@ -450,26 +475,27 @@ public class registrarDeduccion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jidDeduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                .addGap(682, 682, 682))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jidPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton7)
-                                .addGap(34, 34, 34)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFecha)
-                                .addGap(382, 382, 382))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jNombre)
-                                .addGap(436, 436, 436))))))
+                                .addGap(436, 436, 436))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jidDeduccion, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jidPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton7)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(358, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -595,6 +621,39 @@ public class registrarDeduccion extends javax.swing.JFrame {
         buscarPrestamo();
         buscarCliente();
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jidDeduccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jidDeduccionKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String id = jidDeduccion.getText();
+            System.out.println(id);
+            if ("".equals(id)) {
+                JOptionPane.showMessageDialog(null, "Ingrese codigo");
+            } else {
+                Deducciones ded;
+                ServiciosDB service = new ServiciosDB();
+                ded = service.findByIdDeduccion(id);
+                if (ded != null) {
+                    setearBusqueda(ded);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El Cliente: " + id + " no existe");
+                }
+            }
+        }
+    }//GEN-LAST:event_jidDeduccionKeyPressed
+
+    private void jFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFechaMouseClicked
+        // TODO add your handling code here:
+        setearFecha();
+    }//GEN-LAST:event_jFechaMouseClicked
+
+    private void jidPrestamoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jidPrestamoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarPrestamo();
+            buscarCliente();
+        }
+    }//GEN-LAST:event_jidPrestamoKeyPressed
 
     /**
      * @param args the command line arguments

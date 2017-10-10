@@ -2,6 +2,7 @@ package indesapres.grafico;
 
 import indesapres.logica.ServiciosDB;
 import indesapres.modelos.Clientes;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -144,7 +145,7 @@ public class registrarCliente extends javax.swing.JFrame {
         jToolBar1.add(jLabel24);
 
         jLabel27.setForeground(new java.awt.Color(204, 204, 255));
-        jLabel27.setText("......");
+        jLabel27.setText("............");
         jToolBar1.add(jLabel27);
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -288,6 +289,11 @@ public class registrarCliente extends javax.swing.JFrame {
         jLabel6.setText("DEPARTAMENTO");
 
         jidCliente.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jidCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jidClienteKeyPressed(evt);
+            }
+        });
 
         jNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -552,6 +558,30 @@ public class registrarCliente extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jidClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jidClienteKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            String id = jidCliente.getText();
+        if("".equals(id)){
+            JOptionPane.showMessageDialog(null, "Ingrese codigo");
+        }else{
+            try {
+                Clientes clie;
+                ServiciosDB service = new ServiciosDB();
+                clie = service.findByIdClientes(id);
+                if (clie != null) {
+                    setearBusqueda(clie);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El Cliente: " + id + " no existe");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(registrarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        }
+    }//GEN-LAST:event_jidClienteKeyPressed
 
     /**
      * @param args the command line arguments
