@@ -296,9 +296,10 @@ public class ServiciosDB {
             if (!rs.next()) {
                 return null;
             }
-            return (new Deducciones(rs.getString("IDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
+            return (new Deducciones(rs.getString("IDDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
                     rs.getFloat("SALDO")));
         } catch (SQLException se) {
+            System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "ERROR Codigo de Deduccion: " + id + "no se ha encontrado.");
         }
         return null;

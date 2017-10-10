@@ -2,7 +2,9 @@
 package indesapres.grafico;
 
 import indesapres.logica.ServiciosDB;
+import indesapres.modelos.Clientes;
 import indesapres.modelos.Deducciones;
+import indesapres.modelos.Prestamos;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,7 @@ public class registrarDeduccion extends javax.swing.JFrame {
     }
     
     public Deducciones enviarDatos(){
+        this.tm = (DefaultTableModel) jTable2.getModel();
         Deducciones ded;
         String idDeduccion = jidDeduccion.getText();
         String idPrestamo = jidPrestamo.getText();
@@ -45,7 +48,81 @@ public class registrarDeduccion extends javax.swing.JFrame {
     }
     
     public void setearBusqueda(Deducciones ded){
-        
+        jidDeduccion.setText(ded.getIdDeduccion());
+        jidPrestamo.setText(ded.getIdPrestamo());
+        jFecha.setText(ded.getFecha()); 
+        buscarPrestamo();
+        buscarCliente();
+    }
+    
+    public void buscarPrestamo(){
+        String id = jidPrestamo.getText();
+        if("".equals(id)){
+            JOptionPane.showMessageDialog(null, "No hay codigo de prestamo ingresado");
+        }else{
+            Prestamos pres;
+            ServiciosDB service = new ServiciosDB();
+            pres = service.findByIdPrestamos(id);
+            if (pres != null) {
+                setearPrestamo(pres);
+            } else {
+                JOptionPane.showMessageDialog(null, "El Prestamo: " + id + " no existe");
+            }
+        }
+    }
+    
+    public void setearPrestamo(Prestamos pres){
+        jTable2.setValueAt(pres.getPrestamos() ,0, 0);
+        jTable2.setValueAt(pres.getInteresanual() ,0, 1);
+        jTable2.setValueAt(pres.getInteresAcumulado() ,0, 2);
+        jTable2.setValueAt(pres.getTotalinteres() ,0, 3);
+        jTable2.setValueAt(pres.getCapitalinteres() ,0, 4);
+        jTable2.setValueAt(pres.getAbonocapital() ,0, 5);
+        jTable2.setValueAt(pres.getInteresganado() ,0, 6);
+        jTable2.setValueAt(pres.getDeduccion() ,0, 7);
+        float Saldo = pres.getPrestamos() - pres.getDeduccion();
+        jTable2.setValueAt(Saldo ,0, 8);
+    }
+    
+    public void buscarCliente(){
+        String id = jidPrestamo.getText();
+        if("".equals(id)){
+            JOptionPane.showMessageDialog(null, "No hay codigo de prestamo ingresado");
+        }else{
+            Prestamos pres;
+            ServiciosDB service = new ServiciosDB();
+            pres = service.findByIdPrestamos(id);
+            if (pres != null) {
+                obtenerCliente(pres);
+            } else {
+                JOptionPane.showMessageDialog(null, "El Prestamo: " + id + " no existe");
+            }
+        }
+    }
+    
+    public void obtenerCliente(Prestamos pres){
+        String id = pres.getIdCliente();
+        if("".equals(id)){
+            JOptionPane.showMessageDialog(null, "Ingrese codigo");
+        }else{
+            try {
+                Clientes clie;
+                ServiciosDB service = new ServiciosDB();
+                clie = service.findByIdClientes(id);
+                if (clie != null) {
+                    setearCliente(clie);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El Cliente: " + id + " no existe");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(registrarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void setearCliente(Clientes clie){
+        jNombre.setText(clie.getNombre() + " " + clie.getApellido());
     }
     
     @SuppressWarnings("unchecked")
@@ -90,6 +167,9 @@ public class registrarDeduccion extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jNombre = new javax.swing.JTextField();
+        jButton7 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -288,12 +368,17 @@ public class registrarDeduccion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel1.setText("CODIGO DEL PRESTAMO");
 
-        jidPrestamo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jidPrestamo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jidPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jidPrestamoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("CODIGO DEL DEDUCCION");
 
-        jidDeduccion.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jidDeduccion.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jidDeduccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jidDeduccionActionPerformed(evt);
@@ -303,13 +388,14 @@ public class registrarDeduccion extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel3.setText("FECHA");
 
-        jFecha.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jFecha.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFechaActionPerformed(evt);
             }
         });
 
+        jTable2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null}
@@ -319,7 +405,7 @@ public class registrarDeduccion extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class
+                java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -329,6 +415,24 @@ public class registrarDeduccion extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\oscme\\OneDrive\\Documents\\NetBeansProjects\\Prestamos\\pictures\\deducciongrande.png")); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel5.setText("CLIENTE");
+
+        jNombre.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jNombreActionPerformed(evt);
+            }
+        });
+
+        jButton7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jButton7.setText("Datos del Prestamo");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,19 +450,26 @@ public class registrarDeduccion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jidPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFecha))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jidDeduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                .addGap(193, 193, 193)))
-                        .addGap(489, 489, 489))))
+                                .addGap(682, 682, 682))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jidPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton7)
+                                .addGap(34, 34, 34)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFecha)
+                                .addGap(382, 382, 382))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jNombre)
+                                .addGap(436, 436, 436))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,21 +477,26 @@ public class registrarDeduccion extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jidPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jidDeduccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
 
@@ -439,6 +555,7 @@ public class registrarDeduccion extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String id = jidDeduccion.getText();
+        System.out.println(id);
         if("".equals(id)){
             JOptionPane.showMessageDialog(null, "Ingrese codigo");
         }else{
@@ -464,6 +581,20 @@ public class registrarDeduccion extends javax.swing.JFrame {
     private void jFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFechaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFechaActionPerformed
+
+    private void jidPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jidPrestamoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jidPrestamoActionPerformed
+
+    private void jNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jNombreActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        buscarPrestamo();
+        buscarCliente();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -507,6 +638,7 @@ public class registrarDeduccion extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JTextField jFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
@@ -532,6 +664,8 @@ public class registrarDeduccion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField jNombre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
