@@ -18,7 +18,7 @@ import java.util.List;
  * @author oscme
  */
 public class ServiciosDB {
-    private Connection con = null;
+    public Connection con = null;
     Statement st;
     String url = "jdbc:oracle:thin:@localhost:1521/xe";
     String username = "indesapres";
@@ -52,6 +52,7 @@ public class ServiciosDB {
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null," El Cliente: " + clie.getIdCliente() +" se ha guardado Exitosamente.");
         } catch (SQLException se) {
+            System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "Error El Cliente: " + clie.getIdCliente() +" no se ha guardado Exitosamente.");
         }
     }
@@ -86,7 +87,7 @@ public class ServiciosDB {
         if (clie == null) {
             JOptionPane.showMessageDialog(null, "Codigo de cliente: " + id + " no existe.");
         }
-        String query = "DELETE FROM CLIENTES WHERE IDCLIENTE= ?";
+        String query = "DELETE FROM CLIENTES WHERE IDCLIENTE = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {  
             stmt.setString(1, id);
             stmt.executeUpdate();
@@ -156,6 +157,7 @@ public class ServiciosDB {
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, " El Cliente: " + pres.getIdPrestamo() + " se ha guardado Exitosamente.");
         } catch (SQLException se) {
+            System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "Error El Cliente: " + pres.getIdPrestamo() +" no se ha guardado Exitosamente.");
         }
     }
@@ -290,6 +292,23 @@ public class ServiciosDB {
 
     public Deducciones findByIdDeduccion(String id) {
         String query = "SELECT * FROM DEDUCCION WHERE IDDEDUCCION = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return (new Deducciones(rs.getString("IDDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
+                    rs.getFloat("SALDO")));
+        } catch (SQLException se) {
+            System.out.println(se.toString());
+            JOptionPane.showMessageDialog(null, "ERROR Codigo de Deduccion: " + id + "no se ha encontrado.");
+        }
+        return null;
+    } 
+    
+    public Deducciones findByIdPrestamo(String id) {
+        String query = "SELECT * FROM DEDUCCION WHERE IDPRESTAMO = ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();

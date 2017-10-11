@@ -1,4 +1,3 @@
-
 package indesapres.grafico;
 
 import indesapres.logica.ServiciosDB;
@@ -20,14 +19,15 @@ import javax.swing.table.DefaultTableModel;
  * @author oscme
  */
 public class registrarPrestamo extends javax.swing.JFrame {
+
     public DefaultTableModel tm;
     Date fechaActual;
-    
+
     public registrarPrestamo() {
         initComponents();
         setearFecha();
     }
-    
+
     public void setearFecha() {
         fechaActual = new Date();
         jDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(fechaActual));
@@ -40,18 +40,18 @@ public class registrarPrestamo extends javax.swing.JFrame {
         String idCliente = jCodigo1.getText();
         float prestamo = Float.parseFloat(jPrestamo.getText());
         float porInteresanual = Float.parseFloat(jporAnual.getText());
-        float porInteresAcumulado = Float.parseFloat(String.valueOf(tm.getValueAt(0,0)));
+        float porInteresAcumulado = Float.parseFloat(String.valueOf(tm.getValueAt(0, 0)));
         int plazo = Integer.parseInt(jPlazo.getText());
-        float totalIntereses = Float.parseFloat(String.valueOf(tm.getValueAt(0,1)));
-        float capitalInteres = Float.parseFloat(String.valueOf(tm.getValueAt(0,2)));
-        float deduccion = Float.parseFloat(String.valueOf(tm.getValueAt(0,3)));
-        float abonocapital = Float.parseFloat(String.valueOf(tm.getValueAt(0,4)));
-        float interesGanado = Float.parseFloat(String.valueOf(tm.getValueAt(0,5)));
+        float totalIntereses = Float.parseFloat(String.valueOf(tm.getValueAt(0, 1)));
+        float capitalInteres = Float.parseFloat(String.valueOf(tm.getValueAt(0, 2)));
+        float deduccion = Float.parseFloat(String.valueOf(tm.getValueAt(0, 3)));
+        float abonocapital = Float.parseFloat(String.valueOf(tm.getValueAt(0, 4)));
+        float interesGanado = Float.parseFloat(String.valueOf(tm.getValueAt(0, 5)));
         pres = new Prestamos(idPrestamo, fecha, porInteresanual, porInteresAcumulado, plazo, totalIntereses, capitalInteres, deduccion, abonocapital, interesGanado, idCliente, prestamo);
         return pres;
     }
 
-    public void limpiar(){
+    public void limpiar() {
         jCodigo.setText("");
         jCodigo1.setText("");
         jDate.setText("");
@@ -59,15 +59,15 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jPrestamo.setText("");
         jPlazo.setText("");
         jporAnual.setText("");
-        jTable2.setValueAt(0.0 ,0, 0);
-        jTable2.setValueAt(0.0 ,0, 1);
-        jTable2.setValueAt(0.0 ,0, 2);
-        jTable2.setValueAt(0.0 ,0, 3);
-        jTable2.setValueAt(0.0 ,0, 4);
-        jTable2.setValueAt(0.0 ,0, 5);
+        jTable2.setValueAt(0.0, 0, 0);
+        jTable2.setValueAt(0.0, 0, 1);
+        jTable2.setValueAt(0.0, 0, 2);
+        jTable2.setValueAt(0.0, 0, 3);
+        jTable2.setValueAt(0.0, 0, 4);
+        jTable2.setValueAt(0.0, 0, 5);
     }
-    
-    public void setearBusqueda(Prestamos pres){
+
+    public void setearBusqueda(Prestamos pres) {
         this.tm = (DefaultTableModel) jTable2.getModel();
         jCodigo.setText(pres.getIdPrestamo());
         jCodigo1.setText(pres.getIdCliente());
@@ -84,11 +84,11 @@ public class registrarPrestamo extends javax.swing.JFrame {
         buscarCliente();
     }
 
-    public void buscarCliente(){
+    public void buscarCliente() {
         String id = jCodigo1.getText();
-        if("".equals(id)){
+        if ("".equals(id)) {
             JOptionPane.showMessageDialog(null, "No hay codigo de cliente ingresado");
-        }else{
+        } else {
             try {
                 Clientes clie;
                 ServiciosDB service = new ServiciosDB();
@@ -104,11 +104,11 @@ public class registrarPrestamo extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void setearCliente(Clientes clie){
+
+    public void setearCliente(Clientes clie) {
         jCodigo2.setText(clie.getNombre() + " " + clie.getApellido());
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -350,6 +350,11 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 jCodigo1ActionPerformed(evt);
             }
         });
+        jCodigo1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCodigo1KeyPressed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel5.setText("NOMBRE CLIENTE");
@@ -478,7 +483,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -518,7 +523,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -558,10 +563,10 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         String id = jCodigo.getText();
-        if ("".equals(jCodigo.getText())){
+        String id = jCodigo.getText();
+        if ("".equals(jCodigo.getText())) {
             JOptionPane.showMessageDialog(null, "Ingrese codigo");
-        }else{
+        } else {
             try {
                 Prestamos pres;
                 pres = enviarDatos();
@@ -575,7 +580,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-         try {
+        try {
             String id = jCodigo.getText();
             ServiciosDB service = new ServiciosDB();
             service.deletePrestamo(id);
@@ -593,9 +598,9 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String id = jCodigo.getText();
-        if("".equals(id)){
+        if ("".equals(id)) {
             JOptionPane.showMessageDialog(null, "Ingrese codigo");
-        }else{
+        } else {
             Prestamos pres;
             ServiciosDB service = new ServiciosDB();
             pres = service.findByIdPrestamos(id);
@@ -625,7 +630,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
     private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jTable2KeyPressed
 
     private void jPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestamoActionPerformed
@@ -645,14 +650,13 @@ public class registrarPrestamo extends javax.swing.JFrame {
         if (prestamo == 0.0) {
             JOptionPane.showMessageDialog(null, "Introduzca la cantidad del prestamo");
         }
-        if(plazo == 0){
+        if (plazo == 0) {
             JOptionPane.showMessageDialog(null, "Introduzca el plazo del prestamo");
-        }
-        else {
+        } else {
             if (plazo <= 12) {
                 float Totalinteresganado = (float) (prestamo * interesAnual);
                 float Capitalinteres = prestamo + Totalinteresganado;
-                float deduccion = Capitalinteres /(plazo * 2);
+                float deduccion = Capitalinteres / (plazo * 2);
                 float abonocapital = prestamo / (plazo * 2);
                 float interesganado = Totalinteresganado / (plazo * 2);
                 jTable2.setValueAt(0.0, 0, 0);
@@ -661,12 +665,12 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 jTable2.setValueAt(deduccion, 0, 3);
                 jTable2.setValueAt(abonocapital, 0, 4);
                 jTable2.setValueAt(interesganado, 0, 5);
-            }else{
+            } else {
                 float interesAcumulado;
                 float anio = plazo / 12;
                 DecimalFormat df = new DecimalFormat("#.#");
-                df.format(anio);
-                int mes = obtenermes(anio);
+                String dfanio = df.format(anio);
+                int mes = obtenermes(dfanio);
                 float totalmes = (float) 12.0;
                 float porMes = (obtenerInteres(interesAnual) / totalmes) * mes;
                 Math.round(porMes);
@@ -674,12 +678,11 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 int obInteres = obtenerInteres(interesAnual);
                 interesAcumulado = (obInteres * year) + porMes;
                 float iporcentaje = convertirInteres(interesAcumulado);
-                System.out.println("iporcentaje: " + iporcentaje);
                 float Totalinteresganado = prestamo * iporcentaje;
                 float capitalInteres = prestamo + Totalinteresganado;
                 float deduccion = capitalInteres / (plazo * 2);
                 float abonoCapital = prestamo / (plazo * 2);
-                double interesganado = Totalinteresganado / (plazo *2);
+                double interesganado = Totalinteresganado / (plazo * 2);
                 jTable2.setValueAt(interesAcumulado, 0, 0);
                 jTable2.setValueAt(Totalinteresganado, 0, 1);
                 jTable2.setValueAt(capitalInteres, 0, 2);
@@ -697,22 +700,22 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private void jPlazoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPlazoMouseClicked
         // TODO add your handling code here:
         float prestamo = Float.parseFloat(jPrestamo.getText());
-        if (prestamo >= 500 && prestamo <= 5000){
+        if (prestamo >= 500 && prestamo <= 5000) {
             int plazo = 5;
             jPlazo.setText(Integer.toString(plazo));
-        }else if (prestamo >= 5001 && prestamo <= 20000){
+        } else if (prestamo >= 5001 && prestamo <= 20000) {
             int plazo = 15;
             jPlazo.setText(Integer.toString(plazo));
-        }else if(prestamo >= 20001 && prestamo <= 50000){
+        } else if (prestamo >= 20001 && prestamo <= 50000) {
             int plazo = 22;
             jPlazo.setText(Integer.toString(plazo));
-        }else if(prestamo >= 50001 && prestamo <= 80000){
+        } else if (prestamo >= 50001 && prestamo <= 80000) {
             int plazo = 24;
             jPlazo.setText(Integer.toString(plazo));
-        }else if (prestamo >= 80001 && prestamo <= 100000){
+        } else if (prestamo >= 80001 && prestamo <= 100000) {
             int plazo = 24;
             jPlazo.setText(Integer.toString(plazo));
-        }else if (prestamo >= 100001 &&  prestamo <= 150000){
+        } else if (prestamo >= 100001 && prestamo <= 150000) {
             JOptionPane.showMessageDialog(null, "Sujeto a analisis");
         }
     }//GEN-LAST:event_jPlazoMouseClicked
@@ -721,19 +724,19 @@ public class registrarPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
         int plazo = Integer.parseInt(jPlazo.getText());
         float prestamo = Float.parseFloat(jPrestamo.getText());
-        if (plazo == 5 ){
+        if (plazo == 5) {
             float interesanual = (float) 0.20;
             jporAnual.setText(Float.toString(interesanual));
-        }else if(plazo == 15 ){
+        } else if (plazo == 15) {
             float interesanual = (float) 0.22;
             jporAnual.setText(Float.toString(interesanual));
-        } else if(plazo == 22 ){
+        } else if (plazo == 22) {
             float interesanual = (float) 0.24;
             jporAnual.setText(Float.toString(interesanual));
-        } else if(plazo == 24 && (prestamo >= 50001 && prestamo <= 80000)){
+        } else if (plazo == 24 && (prestamo >= 50001 && prestamo <= 80000)) {
             float interesanual = (float) 0.25;
             jporAnual.setText(Float.toString(interesanual));
-        } else if(plazo == 24 && (prestamo >= 80001 && prestamo <= 100000)){
+        } else if (plazo == 24 && (prestamo >= 80001 && prestamo <= 100000)) {
             float interesanual = (float) 0.26;
             jporAnual.setText(Float.toString(interesanual));
         } else {
@@ -747,20 +750,20 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
     private void jCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCodigoKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String id = jCodigo.getText();
-        if("".equals(id)){
-            JOptionPane.showMessageDialog(null, "Ingrese codigo");
-        }else{
-            Prestamos pres;
-            ServiciosDB service = new ServiciosDB();
-            pres = service.findByIdPrestamos(id);
-            if (pres != null) {
-                setearBusqueda(pres);
+            if ("".equals(id)) {
+                JOptionPane.showMessageDialog(null, "Ingrese codigo");
             } else {
-                JOptionPane.showMessageDialog(null, "El Prestamo: " + id + " no existe");
+                Prestamos pres;
+                ServiciosDB service = new ServiciosDB();
+                pres = service.findByIdPrestamos(id);
+                if (pres != null) {
+                    setearBusqueda(pres);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El Prestamo: " + id + " no existe");
+                }
             }
-        }
         }
     }//GEN-LAST:event_jCodigoKeyPressed
 
@@ -768,6 +771,13 @@ public class registrarPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
         setearFecha();
     }//GEN-LAST:event_jDateMouseClicked
+
+    private void jCodigo1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCodigo1KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarCliente();
+        }
+    }//GEN-LAST:event_jCodigo1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -846,12 +856,14 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JTextField jporAnual;
     // End of variables declaration//GEN-END:variables
 
-    public int obtenermes(double anio) {
+    public int obtenermes(String dfanio) {
         int mes;
-        String montoEnLetras = Double.toString(anio); 
+        float anio = Float.parseFloat(dfanio);
+        String montoEnLetras = Float.toString(anio);
         String[] nums = montoEnLetras.split("\\.");
         String montoEnLetrasDecimal = nums[1];
         mes = Integer.parseInt(montoEnLetrasDecimal);
+        Math.round(mes);
         switch (mes) {
             case 1:
                 mes = 2;
@@ -885,21 +897,34 @@ public class registrarPrestamo extends javax.swing.JFrame {
         }
         return mes;
     }
-    
+
     public int obtenerInteres(float year) {
         BigDecimal number = new BigDecimal(year);
         int iPart = number.intValue();
         return iPart;
     }
-    
+
     public float convertirInteres(float interes) {
-        float cinteres;
+        float cinteres = 0;
         BigDecimal number = new BigDecimal(interes);
         int iPart = number.intValue();
         BigDecimal fraccion = number.remainder(BigDecimal.ONE);
-        String interesletras = "0." + iPart + fraccion;
-        cinteres = Float.parseFloat(interesletras);
-        System.out.println("cinteres: " + cinteres);
-        return cinteres;
+        if (isFloat(interes)) {
+            String montoEnLetras = fraccion.toString();
+            String[] nums = montoEnLetras.split("\\.");
+            String montoEnLetrasDecimal = nums[1];
+            int newFrac = Integer.parseInt(montoEnLetrasDecimal);
+            String interesletras = "0." + iPart + newFrac;
+            cinteres = Float.parseFloat(interesletras);
+            return cinteres;
+        } else {
+            String interesletras = "0." + iPart + fraccion;
+            cinteres = Float.parseFloat(interesletras);
+            return cinteres;
+        }
+    }
+
+    public boolean isFloat(float n) {
+        return n % 1 != 0;
     }
 }
