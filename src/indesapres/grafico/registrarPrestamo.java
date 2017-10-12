@@ -38,6 +38,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         String idPrestamo = jCodigo.getText();
         String fecha = jDate.getText();
         String idCliente = jCodigo1.getText();
+        String Nombre = jCodigo2.getText();
         float prestamo = Float.parseFloat(jPrestamo.getText());
         float porInteresanual = Float.parseFloat(jporAnual.getText());
         float porInteresAcumulado = Float.parseFloat(String.valueOf(tm.getValueAt(0, 0)));
@@ -47,7 +48,8 @@ public class registrarPrestamo extends javax.swing.JFrame {
         float deduccion = Float.parseFloat(String.valueOf(tm.getValueAt(0, 3)));
         float abonocapital = Float.parseFloat(String.valueOf(tm.getValueAt(0, 4)));
         float interesGanado = Float.parseFloat(String.valueOf(tm.getValueAt(0, 5)));
-        pres = new Prestamos(idPrestamo, fecha, porInteresanual, porInteresAcumulado, plazo, totalIntereses, capitalInteres, deduccion, abonocapital, interesGanado, idCliente, prestamo);
+        float saldo = Float.parseFloat(String.valueOf(tm.getValueAt(0, 6)));
+        pres = new Prestamos(idPrestamo, fecha, idCliente, Nombre, prestamo, plazo, porInteresanual, porInteresAcumulado, totalIntereses, capitalInteres, deduccion, abonocapital, interesGanado, saldo);
         return pres;
     }
 
@@ -65,6 +67,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jTable2.setValueAt(0.0, 0, 3);
         jTable2.setValueAt(0.0, 0, 4);
         jTable2.setValueAt(0.0, 0, 5);
+        jTable2.setValueAt(0.0, 0, 6);
     }
 
     public void setearBusqueda(Prestamos pres) {
@@ -73,7 +76,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jCodigo1.setText(pres.getIdCliente());
         jDate.setText(pres.getFecha());
         jPrestamo.setText(Float.toString(pres.getPrestamos()));
-        jPlazo.setText(Integer.toString(pres.getPlazo()));
+        jPlazo.setText(Float.toString(pres.getPlazo()));
         jporAnual.setText(Float.toString(pres.getInteresanual()));
         jTable2.setValueAt(pres.getInteresAcumulado(), 0, 0);
         jTable2.setValueAt(pres.getTotalinteres(), 0, 1);
@@ -81,6 +84,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jTable2.setValueAt(pres.getDeduccion(), 0, 3);
         jTable2.setValueAt(pres.getAbonocapital(), 0, 4);
         jTable2.setValueAt(pres.getInteresganado(), 0, 5);
+        jTable2.setValueAt(pres.getSaldo(), 0, 6);
         buscarCliente();
     }
 
@@ -191,7 +195,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jToolBar1.add(jLabel22);
 
         jLabel25.setForeground(new java.awt.Color(204, 204, 255));
-        jLabel25.setText("......");
+        jLabel25.setText("..............");
         jToolBar1.add(jLabel25);
 
         jLabel26.setForeground(new java.awt.Color(204, 204, 255));
@@ -199,7 +203,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         jToolBar1.add(jLabel26);
 
         jLabel23.setForeground(new java.awt.Color(204, 204, 255));
-        jLabel23.setText("......");
+        jLabel23.setText(".............");
         jToolBar1.add(jLabel23);
 
         jLabel24.setForeground(new java.awt.Color(204, 204, 255));
@@ -368,14 +372,14 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "% Interes Acum.", "Total Interes Ganado", "Capital + Interes", "Deduccion", "Abono a Capital", "Interes Ganado"
+                "% Interes Acum.", "Total Interes Ganado", "Capital + Interes", "Deduccion", "Abono a Capital", "Interes Ganado", "Saldo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -456,7 +460,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1052, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,7 +471,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCodigo1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                .addComponent(jCodigo1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(44, 44, 44)
@@ -478,7 +482,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCodigo2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                                .addComponent(jCodigo2, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                                 .addGap(172, 172, 172))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -537,7 +541,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jporAnual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -665,19 +669,22 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 jTable2.setValueAt(deduccion, 0, 3);
                 jTable2.setValueAt(abonocapital, 0, 4);
                 jTable2.setValueAt(interesganado, 0, 5);
+                jTable2.setValueAt(prestamo, 0, 6);
             } else {
                 float interesAcumulado;
                 float anio = plazo / 12;
-                DecimalFormat df = new DecimalFormat("#.#");
+                DecimalFormat df = new DecimalFormat("#.##");
                 String dfanio = df.format(anio);
+                System.out.println("dfanio: " + dfanio);
                 int mes = obtenermes(dfanio);
+                System.out.println("mes: " +  mes);
                 float totalmes = (float) 12.0;
-                float porMes = (obtenerInteres(interesAnual) / totalmes) * mes;
+                float porMes = (interesAnual / totalmes) * mes;
                 Math.round(porMes);
                 int year = (int) Math.floor(anio);
-                int obInteres = obtenerInteres(interesAnual);
-                interesAcumulado = (obInteres * year) + porMes;
-                float iporcentaje = convertirInteres(interesAcumulado);
+                interesAcumulado = (interesAnual * year) + porMes;
+                String interesAcum = df.format(interesAcumulado);
+                float iporcentaje = convertirInteres(interesAcum);
                 float Totalinteresganado = prestamo * iporcentaje;
                 float capitalInteres = prestamo + Totalinteresganado;
                 float deduccion = capitalInteres / (plazo * 2);
@@ -689,6 +696,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 jTable2.setValueAt(deduccion, 0, 3);
                 jTable2.setValueAt(abonoCapital, 0, 4);
                 jTable2.setValueAt(interesganado, 0, 5);
+                jTable2.setValueAt(prestamo, 0, 6);
             }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -776,6 +784,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buscarCliente();
+            generarCodigo();
         }
     }//GEN-LAST:event_jCodigo1KeyPressed
 
@@ -899,20 +908,28 @@ public class registrarPrestamo extends javax.swing.JFrame {
     }
 
     public int obtenerInteres(float year) {
-        BigDecimal number = new BigDecimal(year);
-        int iPart = number.intValue();
-        return iPart;
+        String montoEnLetras = Float.toString(year);
+        String[] nums = montoEnLetras.split("\\.");
+        String montoEnLetrasDecimal = nums[1];
+        int newInteres = Integer.parseInt(montoEnLetrasDecimal);
+        System.out.println("newInteres: " + newInteres);
+        return newInteres;
     }
 
-    public float convertirInteres(float interes) {
-        float cinteres = 0;
+    public float convertirInteres(String interes) {
+        float cinteres = Float.parseFloat(interes);
         BigDecimal number = new BigDecimal(interes);
         int iPart = number.intValue();
         BigDecimal fraccion = number.remainder(BigDecimal.ONE);
-        if (isFloat(interes)) {
+        System.out.println("interes: " + interes);
+        System.out.println("number: " + number);
+        System.out.println("iPart: " + iPart);
+        if (isFloat(cinteres)) {
             String montoEnLetras = fraccion.toString();
+            System.out.println("montoEnLetras: " + montoEnLetras);
             String[] nums = montoEnLetras.split("\\.");
             String montoEnLetrasDecimal = nums[1];
+            System.out.println("montoEnLetrasDecimal: "+ montoEnLetrasDecimal);
             int newFrac = Integer.parseInt(montoEnLetrasDecimal);
             String interesletras = "0." + iPart + newFrac;
             cinteres = Float.parseFloat(interesletras);
@@ -926,5 +943,13 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
     public boolean isFloat(float n) {
         return n % 1 != 0;
+    }
+    
+    public void generarCodigo(){
+        String idCliente = jCodigo1.getText();
+        int cont = 1;
+        String idPrestamo = idCliente + "-" + cont;
+        cont++;
+        jCodigo.setText(idPrestamo);
     }
 }

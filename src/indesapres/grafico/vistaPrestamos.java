@@ -2,20 +2,27 @@
 package indesapres.grafico;
 
 import indesapres.logica.ServiciosDB;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author oscme
  */
 public class vistaPrestamos extends javax.swing.JFrame {
+   
     DefaultTableModel modelo = new DefaultTableModel();
+    public TableRowSorter trsFiltro;
+    
     public vistaPrestamos() {
         initComponents();
         mostrarDatos();
@@ -46,16 +53,32 @@ public class vistaPrestamos extends javax.swing.JFrame {
     public void generarColumnas() {
         modelo.addColumn("CODIGO");
         modelo.addColumn("FECHA");
+        modelo.addColumn("IDCLIENTE");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("PRESTAMO");
+        modelo.addColumn("PLAZO");
         modelo.addColumn("% INTERES ANUAL");
         modelo.addColumn("% INTERES ACUMULADO");
-        modelo.addColumn("PLAZO");
         modelo.addColumn("TOTAL INTERESES");
         modelo.addColumn("CAPITAL + INTERES");
         modelo.addColumn("DEDUCCION");
         modelo.addColumn("ABONO A CAPITAL");
         modelo.addColumn("INTERES GANADO");
-        modelo.addColumn("CODIGO CLIENTE");
-        modelo.addColumn("PRESTAMO");
+        modelo.addColumn("SALDO");
+    }
+    
+     public void filtro() {
+        int columnaABuscar = 0;
+        if (comboFiltro.getSelectedItem() == "CODIGO") {
+            columnaABuscar = 0;
+        }
+        if (comboFiltro.getSelectedItem() == "FECHA") {
+            columnaABuscar = 1;
+        }
+        if (comboFiltro.getSelectedItem() == "PRESTAMO") {
+            columnaABuscar = 11;
+        }
+        trsFiltro.setRowFilter(RowFilter.regexFilter(txtFiltro.getText(), columnaABuscar));
     }
     
     @SuppressWarnings("unchecked")
@@ -65,9 +88,9 @@ public class vistaPrestamos extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboFiltro = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtFiltro = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
@@ -89,16 +112,21 @@ public class vistaPrestamos extends javax.swing.JFrame {
         jLabel19.setText("......");
         jToolBar1.add(jLabel19);
 
-        jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Nombre", "Identidad" }));
-        jToolBar1.add(jComboBox1);
+        comboFiltro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        comboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Nombre", "Identidad" }));
+        jToolBar1.add(comboFiltro);
 
         jLabel20.setForeground(new java.awt.Color(204, 204, 255));
         jLabel20.setText(".....");
         jToolBar1.add(jLabel20);
 
-        jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jToolBar1.add(jTextField2);
+        txtFiltro.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyPressed(evt);
+            }
+        });
+        jToolBar1.add(txtFiltro);
 
         jLabel21.setForeground(new java.awt.Color(204, 204, 255));
         jLabel21.setText("......");
@@ -168,6 +196,20 @@ public class vistaPrestamos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable2KeyPressed
 
+    private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
+        // TODO add your handling code here:
+        txtFiltro.addKeyListener(new KeyAdapter() {
+            public void keyReleased(final KeyEvent e) {
+                String cadena = (txtFiltro.getText());
+                txtFiltro.setText(cadena);
+                repaint();
+                filtro();
+            }
+        });
+        trsFiltro = new TableRowSorter(jTable2.getModel());
+        jTable2.setRowSorter(trsFiltro);
+    }//GEN-LAST:event_txtFiltroKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -204,8 +246,8 @@ public class vistaPrestamos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboFiltro;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -214,7 +256,7 @@ public class vistaPrestamos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

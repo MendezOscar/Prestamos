@@ -6,34 +6,55 @@ package indesapres.modelos;
  * @author oscme
  */
 public class Prestamos {
+
     String idPrestamo;
     String Fecha;
+    String idCliente;
+    String Nombre;
+    float Prestamos;
+    float Plazo;
     float Interesanual;
     float InteresAcumulado;
-    int Plazo;
     float Totalinteres;
     float Capitalinteres;
     float Deduccion;
     float Abonocapital;
     float Interesganado;
-    String idCliente;
-    float Prestamos;
+    float Saldo;
 
-    public Prestamos(String idPrestamo, String Fecha, float Interesanual, float InteresAcumulado, int Plazo, float Totalinteres, float Capitalinteres, float Deduccion, float Abonocapital, float Interesganado, String idCliente, float Prestamos) {
+    public Prestamos(String idPrestamo, String Fecha, String idCliente, String Nombre, float Prestamos, float Plazo, float Interesanual, float InteresAcumulado, float Totalinteres, float Capitalinteres, float Deduccion, float Abonocapital, float Interesganado, float Saldo) {
         this.idPrestamo = idPrestamo;
         this.Fecha = Fecha;
+        this.idCliente = idCliente;
+        this.Nombre = Nombre;
+        this.Prestamos = Prestamos;
+        this.Plazo = Plazo;
         this.Interesanual = Interesanual;
         this.InteresAcumulado = InteresAcumulado;
-        this.Plazo = Plazo;
         this.Totalinteres = Totalinteres;
         this.Capitalinteres = Capitalinteres;
         this.Deduccion = Deduccion;
         this.Abonocapital = Abonocapital;
         this.Interesganado = Interesganado;
-        this.idCliente = idCliente;
-        this.Prestamos = Prestamos;
+        this.Saldo = Saldo;
     }
 
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public float getSaldo() {
+        return Saldo;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public void setSaldo(float Saldo) {
+        this.Saldo = Saldo;
+    }
+    
     public float getPrestamos() {
         return Prestamos;
     }
@@ -41,8 +62,6 @@ public class Prestamos {
     public void setPrestamos(float Prestamos) {
         this.Prestamos = Prestamos;
     }
-
-    
 
     public String getIdPrestamo() {
         return idPrestamo;
@@ -60,7 +79,7 @@ public class Prestamos {
         return InteresAcumulado;
     }
 
-    public int getPlazo() {
+    public float getPlazo() {
         return Plazo;
     }
 
@@ -104,7 +123,7 @@ public class Prestamos {
         this.InteresAcumulado = InteresAcumulado;
     }
 
-    public void setPlazo(int Plazo) {
+    public void setPlazo(float Plazo) {
         this.Plazo = Plazo;
     }
 

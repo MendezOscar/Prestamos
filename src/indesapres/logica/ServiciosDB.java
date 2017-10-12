@@ -137,22 +137,24 @@ public class ServiciosDB {
      
      public void createPrestamos(Prestamos pres){
         String query = "INSERT INTO PRESTAMOS "
-                + "(IDPRESTAMO, FECHA, INTERESANUAL, INTERESACUMULADO, PLAZO, TOTALINTERESES, CAPITALINTERES, DEDUCCION, ABONOCAPITAL, INTERESGANADO, IDCLIENTE, PRESTAMO) "
-                + "VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "(IDPRESTAMO, FECHA, IDCLIENTE, NOMBRE, PRESTAMO, PLAZO, INTERESANUAL, INTERESACUMULADO, TOTALINTERESES, CAPITALINTERES, DEDUCCION, ABONOCAPITAL, INTERESGANADO, SALDO) "
+                + "VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
          System.out.println(query);
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, pres.getIdPrestamo());
             stmt.setString(2, pres.getFecha());
-            stmt.setFloat(3, pres.getInteresanual());
-            stmt.setFloat(4, pres.getInteresAcumulado());
-            stmt.setInt(5, pres.getPlazo());
-            stmt.setFloat(6, pres.getTotalinteres());
-            stmt.setFloat(7, pres.getCapitalinteres());
-            stmt.setFloat(8, pres.getDeduccion());
-            stmt.setFloat(9, pres.getAbonocapital());
-            stmt.setFloat(10, pres.getInteresganado());
-            stmt.setString(11, pres.getIdCliente());
-            stmt.setFloat(12, pres.getPrestamos());
+            stmt.setString(3, pres.getIdCliente());
+            stmt.setString(4, pres.getNombre());
+            stmt.setFloat(5, pres.getPrestamos());
+            stmt.setFloat(6, pres.getPlazo());
+            stmt.setFloat(7, pres.getInteresanual());
+            stmt.setFloat(8, pres.getInteresAcumulado());
+            stmt.setFloat(9, pres.getTotalinteres());
+            stmt.setFloat(10, pres.getCapitalinteres());
+            stmt.setFloat(11, pres.getDeduccion());
+            stmt.setFloat(12, pres.getAbonocapital());
+            stmt.setFloat(13, pres.getInteresganado());
+            stmt.setFloat(14, pres.getSaldo());
             System.out.println(query);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, " El Cliente: " + pres.getIdPrestamo() + " se ha guardado Exitosamente.");
@@ -164,21 +166,23 @@ public class ServiciosDB {
      
     public void updatePrestamo(String id, Prestamos pres) throws SQLException {
         String query = "UPDATE PRESTAMOS "
-                + "SET FECHA= ?, INTERESANUAL= ?, INTERESACUMULADO= ?, PLAZO= ?, TOTALINTERESES= ?, CAPITALINTERES= ?, DEDUCCION= ?, ABONOCAPITAL= ?, INTERESGANADO= ?, IDCLIENTE= ?, PRESTAMO= ?"
+                + "SET FECHA= ?, IDCLIENTE =?, NOMBRE=?, PRESTAMO?, PLAZO=?, INTERESANUAL= ?, INTERESACUMULADO= ?, TOTALINTERESES= ?, CAPITALINTERES= ?, DEDUCCION= ?, ABONOCAPITAL= ?, INTERESGANADO= ?, SALDO= ?"
                 + "WHERE IDPRESTAMO= ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, pres.getFecha());
-            stmt.setFloat(2, pres.getInteresanual());
-            stmt.setFloat(3, pres.getInteresAcumulado());
-            stmt.setInt(4, pres.getPlazo());
-            stmt.setFloat(5, pres.getTotalinteres());
-            stmt.setFloat(6, pres.getCapitalinteres());
-            stmt.setFloat(7, pres.getDeduccion());
-            stmt.setFloat(8, pres.getAbonocapital());
-            stmt.setFloat(9, pres.getInteresganado());
-            stmt.setString(10, pres.getIdCliente());
-            stmt.setFloat(11, pres.getPrestamos());
-            stmt.setString(12, pres.getIdPrestamo());
+            stmt.setString(2, pres.getIdCliente());
+            stmt.setString(3, pres.getNombre());
+            stmt.setFloat(4, pres.getPrestamos());
+            stmt.setFloat(5, pres.getPlazo());
+            stmt.setFloat(6, pres.getInteresanual());
+            stmt.setFloat(7, pres.getInteresAcumulado());
+            stmt.setFloat(8, pres.getTotalinteres());
+            stmt.setFloat(9, pres.getCapitalinteres());
+            stmt.setFloat(10, pres.getDeduccion());
+            stmt.setFloat(11, pres.getAbonocapital());
+            stmt.setFloat(12, pres.getInteresganado());
+            stmt.setFloat(13, pres.getSaldo());
+            stmt.setString(11, pres.getIdPrestamo());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "El Prestamo: " + id + " se ha actualizado correctamente.");
         } catch (SQLException se) {
@@ -190,7 +194,7 @@ public class ServiciosDB {
     public void deletePrestamo(String id) throws SQLException {
         Prestamos pres = findByIdPrestamos(id);
         if (pres == null) {
-            JOptionPane.showMessageDialog(null, "Codigo de cliente: " + id + " no existe.");
+            JOptionPane.showMessageDialog(null, "Codigo de Prestamo: " + id + " no existe.");
         }
         String query = "DELETE FROM PRESTAMOS WHERE IDPRESTAMO= ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {  
@@ -210,10 +214,11 @@ public class ServiciosDB {
             if (!rs.next()) {
                 return null;
             }
-            return (new Prestamos(rs.getString("IDPRESTAMO"),rs.getString("FECHA"), rs.getFloat("INTERESANUAL"), 
-                    rs.getFloat("INTERESACUMULADO"), rs.getInt("PLAZO"), rs.getFloat("TOTALINTERESES"),
+            return (new Prestamos(rs.getString("IDPRESTAMO"),rs.getString("FECHA"), rs.getString("IDCLIENTE"),
+                    rs.getString("NOMBRE"), rs.getFloat("PRESTAMO"), rs.getFloat("PLAZO"), rs.getFloat("INTERESANUAL"), 
+                    rs.getFloat("INTERESACUMULADO"), rs.getFloat("TOTALINTERESES"),
                     rs.getFloat("CAPITALINTERES"), rs.getFloat("DEDUCCION"), rs.getFloat("ABONOCAPITAL"),
-                    rs.getFloat("INTERESGANADO"), rs.getString("IDCLIENTE"), rs.getFloat("PRESTAMO")));
+                    rs.getFloat("INTERESGANADO"), rs.getFloat("SALDO")));
         } catch (SQLException se) {
             JOptionPane.showMessageDialog(null, "ERROR Codigo de Prestamo: " + id + "no se ha encontrado.");
         }
@@ -226,10 +231,11 @@ public class ServiciosDB {
             ResultSet rs = stmt.executeQuery(query);
             ArrayList<Prestamos> depts = new ArrayList<>();
             while (rs.next()) {
-                depts.add(new Prestamos(rs.getString("IDPRESTAMO"),rs.getString("FECHA"), rs.getFloat("INTERESANUAL"), 
-                    rs.getFloat("INTERESACUMULADO"), rs.getInt("PLAZO"), rs.getFloat("TOTALINTERESES"),
+                depts.add(new Prestamos(rs.getString("IDPRESTAMO"),rs.getString("FECHA"), rs.getString("IDCLIENTE"),
+                    rs.getString("NOMBRE"), rs.getFloat("PRESTAMO"), rs.getFloat("PLAZO"), rs.getFloat("INTERESANUAL"), 
+                    rs.getFloat("INTERESACUMULADO"), rs.getFloat("TOTALINTERESES"),
                     rs.getFloat("CAPITALINTERES"), rs.getFloat("DEDUCCION"), rs.getFloat("ABONOCAPITAL"),
-                    rs.getFloat("INTERESGANADO"), rs.getString("IDCLIENTE"), rs.getFloat("PRESTAMO")));
+                    rs.getFloat("INTERESGANADO"), rs.getFloat("SALDO")));
             }
             return depts;
         } catch (SQLException se) {

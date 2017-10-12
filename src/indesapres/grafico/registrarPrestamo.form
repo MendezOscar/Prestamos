@@ -47,7 +47,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBar1" alignment="0" pref="918" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" pref="1052" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -58,7 +58,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="jCodigo1" pref="110" max="32767" attributes="0"/>
+                              <Component id="jCodigo1" pref="238" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton8" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
@@ -70,7 +70,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jCodigo2" pref="471" max="32767" attributes="0"/>
+                              <Component id="jCodigo2" pref="605" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -145,7 +145,7 @@
                   <Component id="jporAnual" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="191" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="161" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -199,7 +199,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="......"/>
+            <Property name="text" type="java.lang.String" value=".............."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel26">
@@ -215,7 +215,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="......"/>
+            <Property name="text" type="java.lang.String" value="............."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel24">
@@ -480,17 +480,23 @@
         <Component class="javax.swing.JTable" name="jTable2">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="1">
+              <Table columnCount="7" rowCount="1">
                 <Column editable="true" title="% Interes Acum." type="java.lang.Float"/>
-                <Column editable="true" title="Total Interes Ganado" type="java.lang.Object"/>
-                <Column editable="true" title="Capital + Interes" type="java.lang.Object"/>
-                <Column editable="true" title="Deduccion" type="java.lang.Object"/>
-                <Column editable="true" title="Abono a Capital" type="java.lang.Object"/>
-                <Column editable="true" title="Interes Ganado" type="java.lang.Object"/>
+                <Column editable="true" title="Total Interes Ganado" type="java.lang.Float"/>
+                <Column editable="true" title="Capital + Interes" type="java.lang.Float"/>
+                <Column editable="true" title="Deduccion" type="java.lang.Float"/>
+                <Column editable="true" title="Abono a Capital" type="java.lang.Float"/>
+                <Column editable="true" title="Interes Ganado" type="java.lang.Float"/>
+                <Column editable="true" title="Saldo" type="java.lang.Float"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
