@@ -159,6 +159,11 @@ public class vistaPrestamos extends javax.swing.JFrame {
 
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTable2KeyPressed(evt);
@@ -209,6 +214,15 @@ public class vistaPrestamos extends javax.swing.JFrame {
         trsFiltro = new TableRowSorter(jTable2.getModel());
         jTable2.setRowSorter(trsFiltro);
     }//GEN-LAST:event_txtFiltroKeyPressed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        int row = jTable2.getSelectedRow();
+        String idPres = jTable2.getValueAt(row, 0).toString();
+        System.out.println("idPres: " + idPres);
+        registrarDeduccion.jidPrestamo.setText(idPres);
+        this.setVisible(false);
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments

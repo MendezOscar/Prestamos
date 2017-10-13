@@ -22,7 +22,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
     public DefaultTableModel tm;
     Date fechaActual;
-
+    
     public registrarPrestamo() {
         initComponents();
         setearFecha();
@@ -455,6 +455,11 @@ public class registrarPrestamo extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton8.setText("Buscar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -473,8 +478,8 @@ public class registrarPrestamo extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCodigo1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(44, 44, 44)
+                                .addComponent(jButton8)
+                                .addGap(47, 47, 47)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
                                 .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -788,6 +793,12 @@ public class registrarPrestamo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCodigo1KeyPressed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here
+        vistaClientes vc = new vistaClientes();
+        vc.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -831,7 +842,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JTextField jCodigo;
-    private javax.swing.JTextField jCodigo1;
+    public static javax.swing.JTextField jCodigo1;
     private javax.swing.JTextField jCodigo2;
     private javax.swing.JTextField jDate;
     private javax.swing.JLabel jLabel1;
@@ -945,7 +956,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
         return n % 1 != 0;
     }
     
-    public void generarCodigo(){
+    public void generarCodigo() {
         String idCliente = jCodigo1.getText();
         int cont = 1;
         String idPrestamo = idCliente + "-" + cont;

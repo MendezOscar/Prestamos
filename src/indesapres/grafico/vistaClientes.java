@@ -22,6 +22,7 @@ public class vistaClientes extends javax.swing.JFrame {
 
     DefaultTableModel modelo = new DefaultTableModel();
     public TableRowSorter trsFiltro;
+    String idCliente;
     
     public vistaClientes() {
         initComponents();
@@ -173,6 +174,11 @@ public class vistaClientes extends javax.swing.JFrame {
 
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTable2KeyPressed(evt);
@@ -229,6 +235,15 @@ public class vistaClientes extends javax.swing.JFrame {
         jTable2.setRowSorter(trsFiltro);
     }//GEN-LAST:event_txtFiltroKeyPressed
 
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        int row = jTable2.getSelectedRow();
+        String idClient = jTable2.getValueAt(row, 0).toString();
+        System.out.println("idCliente: " + idClient);
+        registrarPrestamo.jCodigo1.setText(idClient);
+        this.setVisible(false);
+    }//GEN-LAST:event_jTable2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -277,4 +292,5 @@ public class vistaClientes extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
+       
 }

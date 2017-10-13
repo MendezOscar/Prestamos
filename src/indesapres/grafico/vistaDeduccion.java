@@ -56,7 +56,10 @@ public class vistaDeduccion extends javax.swing.JFrame {
         modelo.addColumn("CODIGO DEDUCCION");
         modelo.addColumn("FECHA");
         modelo.addColumn("CODIGO PRESTAMO");
-        modelo.addColumn("SALDO");
+        modelo.addColumn("NOMBRE DEL CLIENTE");
+        modelo.addColumn("PRESTAMO");
+        modelo.addColumn("DEDUCCION");
+        modelo.addColumn("SALDO DEUDOR");
     }
 
      public void filtro() {

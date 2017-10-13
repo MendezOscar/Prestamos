@@ -248,31 +248,38 @@ public class ServiciosDB {
     
     public void createDeduccion(Deducciones ded){
         String query = "INSERT INTO DEDUCCION "
-                + "(IDDEDUCCION, FECHA, IDPRESTAMO, SALDO) "
-                + "VALUES (? , ? , ?, ?)";
+                + "(IDDEDUCCION, FECHA, IDPRESTAMO, NOMBRE, PRESTAMO,DEDUCCION,SALDODEUDOR) "
+                + "VALUES (? , ? , ?, ?, ?, ?, ?)";
          System.out.println(query);
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, ded.getIdDeduccion());
             stmt.setString(2, ded.getFecha());
             stmt.setString(3, ded.getIdPrestamo());
-            stmt.setFloat(4, ded.getSaldo());
+            stmt.setString(4, ded.getNombre());
+            stmt.setFloat(5, ded.getPrestamo());
+            stmt.setFloat(6, ded.getDeduccion());
+            stmt.setFloat(7, ded.getSaldoDeudor());
             System.out.println(query);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, " La Deduccion: " + ded.getIdDeduccion() + " se ha guardado Exitosamente.");
         } catch (SQLException se) {
+            System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "Error La Deduccion: " + ded.getIdDeduccion()  +" no se ha guardado Exitosamente.");
         }
     }
     
      public void updateDeduccion(String id, Deducciones ded) throws SQLException {
         String query = "UPDATE DEDUCCION "
-                + "SET FECHA= ?, IDPRESTAMO= ?, SALDO= ?"
+                + "SET FECHA= ?, IDPRESTAMO= ?, NOMBRE=?, PRESTAMO=?, DEDUCCION=?, SALDODEUDOR= ?"
                 + "WHERE IDDEDUCCION= ?";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, ded.getFecha());
             stmt.setString(2, ded.getIdPrestamo());
-            stmt.setFloat(3, ded.getSaldo());
-            stmt.setString(4, ded.getIdDeduccion());
+            stmt.setString(3, ded.getNombre());
+            stmt.setFloat(4, ded.getPrestamo());
+            stmt.setFloat(5, ded.getDeduccion());
+            stmt.setFloat(6, ded.getSaldoDeudor());
+            stmt.setString(7, ded.getIdDeduccion());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "La deduccion: " + id + " se ha actualizado correctamente.");
         } catch (SQLException se) {
@@ -304,8 +311,9 @@ public class ServiciosDB {
             if (!rs.next()) {
                 return null;
             }
-            return (new Deducciones(rs.getString("IDDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
-                    rs.getFloat("SALDO")));
+            return (new Deducciones(rs.getString("IDDEDUCCION"), rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
+                    rs.getString("NOMBRE") , rs.getFloat("PRESTAMO"), rs.getFloat("DEDUCCION"),
+                    rs.getFloat("SALDODEUDOR")));
         } catch (SQLException se) {
             System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "ERROR Codigo de Deduccion: " + id + "no se ha encontrado.");
@@ -321,8 +329,9 @@ public class ServiciosDB {
             if (!rs.next()) {
                 return null;
             }
-            return (new Deducciones(rs.getString("IDDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
-                    rs.getFloat("SALDO")));
+            return (new Deducciones(rs.getString("IDDEDUCCION"), rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
+                    rs.getString("NOMBRE") , rs.getFloat("PRESTAMO"), rs.getFloat("DEDUCCION"),
+                    rs.getFloat("SALDODEUDOR")));
         } catch (SQLException se) {
             System.out.println(se.toString());
             JOptionPane.showMessageDialog(null, "ERROR Codigo de Deduccion: " + id + "no se ha encontrado.");
@@ -336,8 +345,9 @@ public class ServiciosDB {
             ResultSet rs = stmt.executeQuery(query);
             ArrayList<Deducciones> depts = new ArrayList<>();
             while (rs.next()) {
-                depts.add(new Deducciones(rs.getString("IDEDUCCION"),rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
-                    rs.getFloat("SALDO")));
+                depts.add(new Deducciones(rs.getString("IDDEDUCCION"), rs.getString("FECHA"), rs.getString("IDPRESTAMO"), 
+                    rs.getString("NOMBRE") , rs.getFloat("PRESTAMO"), rs.getFloat("DEDUCCION"),
+                    rs.getFloat("SALDODEUDOR")));
             }
             return depts;
         } catch (SQLException se) {

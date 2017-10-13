@@ -37,9 +37,12 @@ public class registrarDeduccion extends javax.swing.JFrame {
         Deducciones ded;
         String idDeduccion = jidDeduccion.getText();
         String idPrestamo = jidPrestamo.getText();
+        String nombre = jNombre.getText();
         String Fecha = jFecha.getText();
+        float prestamo = Float.parseFloat(String.valueOf(tm.getValueAt(0, 0)));
+        float deduccion = Float.parseFloat(String.valueOf(tm.getValueAt(0, 7)));
         float Saldo = Float.parseFloat(String.valueOf(tm.getValueAt(0,8)));
-        ded = new Deducciones(idDeduccion, Fecha, idPrestamo, Saldo);
+        ded = new Deducciones(idDeduccion, Fecha, idPrestamo, nombre, prestamo, deduccion, Saldo);
         return ded;
     }
     
@@ -133,6 +136,12 @@ public class registrarDeduccion extends javax.swing.JFrame {
     
     public void setearCliente(Clientes clie){
         jNombre.setText(clie.getNombre() + " " + clie.getApellido());
+    }
+    
+    public void modificarPrestamo(){
+        String idPrestamo = jidPrestamo.getText();
+        float saldo =  Float.parseFloat(String.valueOf(tm.getValueAt(0,8)));
+        String query = "UPDATE PRESTAMOS SET SALDO = " + saldo + " WHERE IDPRESTAMO = " + idPrestamo ;
     }
     
     @SuppressWarnings("unchecked")
@@ -452,7 +461,7 @@ public class registrarDeduccion extends javax.swing.JFrame {
         });
 
         jButton7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton7.setText("Datos del Prestamo");
+        jButton7.setText("Buscar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -491,7 +500,7 @@ public class registrarDeduccion extends javax.swing.JFrame {
                                         .addComponent(jidPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton7)
-                                        .addGap(34, 34, 34)
+                                        .addGap(70, 70, 70)
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -503,7 +512,7 @@ public class registrarDeduccion extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jidPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -618,8 +627,8 @@ public class registrarDeduccion extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        buscarPrestamo();
-        buscarCliente();
+        vistaPrestamos vp = new vistaPrestamos();
+        vp.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jidDeduccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jidDeduccionKeyPressed
@@ -731,6 +740,6 @@ public class registrarDeduccion extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField jidDeduccion;
-    private javax.swing.JTextField jidPrestamo;
+    public static javax.swing.JTextField jidPrestamo;
     // End of variables declaration//GEN-END:variables
 }
