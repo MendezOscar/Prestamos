@@ -676,32 +676,22 @@ public class registrarPrestamo extends javax.swing.JFrame {
                 jTable2.setValueAt(interesganado, 0, 5);
                 jTable2.setValueAt(prestamo, 0, 6);
             } else {
-                float interesAcumulado;
-                float anio = plazo / 12;
-                DecimalFormat df = new DecimalFormat("#.##");
-                String dfanio = df.format(anio);
-                System.out.println("dfanio: " + dfanio);
-                int mes = obtenermes(dfanio);
-                System.out.println("mes: " +  mes);
-                float totalmes = (float) 12.0;
-                float porMes = (interesAnual / totalmes) * mes;
-                Math.round(porMes);
-                int year = (int) Math.floor(anio);
-                interesAcumulado = (interesAnual * year) + porMes;
-                String interesAcum = df.format(interesAcumulado);
-                float iporcentaje = convertirInteres(interesAcum);
-                float Totalinteresganado = prestamo * iporcentaje;
+               float interesAcumulado;
+                float base = (float) 1200;
+                float porcentaje = obtenerInteres(interesAnual);
+                interesAcumulado = (prestamo * porcentaje * plazo) / base;
+                System.out.println("interesAcumulado: " + interesAcumulado);
+                float Totalinteresganado = interesAcumulado;
                 float capitalInteres = prestamo + Totalinteresganado;
                 float deduccion = capitalInteres / (plazo * 2);
                 float abonoCapital = prestamo / (plazo * 2);
                 double interesganado = Totalinteresganado / (plazo * 2);
-                jTable2.setValueAt(interesAcumulado, 0, 0);
+                jTable2.setValueAt(0.0, 0, 0);
                 jTable2.setValueAt(Totalinteresganado, 0, 1);
                 jTable2.setValueAt(capitalInteres, 0, 2);
                 jTable2.setValueAt(deduccion, 0, 3);
                 jTable2.setValueAt(abonoCapital, 0, 4);
                 jTable2.setValueAt(interesganado, 0, 5);
-                jTable2.setValueAt(prestamo, 0, 6);
             }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -713,7 +703,7 @@ public class registrarPrestamo extends javax.swing.JFrame {
     private void jPlazoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPlazoMouseClicked
         // TODO add your handling code here:
         float prestamo = Float.parseFloat(jPrestamo.getText());
-        if (prestamo >= 500 && prestamo <= 5000) {
+        if (prestamo >= 1000 && prestamo <= 5000) {
             int plazo = 5;
             jPlazo.setText(Integer.toString(plazo));
         } else if (prestamo >= 5001 && prestamo <= 20000) {
@@ -726,33 +716,40 @@ public class registrarPrestamo extends javax.swing.JFrame {
             int plazo = 24;
             jPlazo.setText(Integer.toString(plazo));
         } else if (prestamo >= 80001 && prestamo <= 100000) {
-            int plazo = 24;
+            int plazo = 26;
             jPlazo.setText(Integer.toString(plazo));
-        } else if (prestamo >= 100001 && prestamo <= 150000) {
+        }else if (prestamo >= 100001 && prestamo <= 150000) {
+            int plazo = 36;
+            jPlazo.setText(Integer.toString(plazo));
+        }  
+        else if (prestamo <= 150001) {
             JOptionPane.showMessageDialog(null, "Sujeto a analisis");
         }
     }//GEN-LAST:event_jPlazoMouseClicked
 
     private void jporAnualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jporAnualMouseClicked
         // TODO add your handling code here:
-        int plazo = Integer.parseInt(jPlazo.getText());
+       int plazo = Integer.parseInt(jPlazo.getText());
         float prestamo = Float.parseFloat(jPrestamo.getText());
         if (plazo == 5) {
+            float interesanual = (float) 0.18;
+            jporAnual.setText(Float.toString(interesanual));
+        }else if (plazo == 15) {
             float interesanual = (float) 0.20;
             jporAnual.setText(Float.toString(interesanual));
-        } else if (plazo == 15) {
+        }else if (plazo == 22) {
             float interesanual = (float) 0.22;
             jporAnual.setText(Float.toString(interesanual));
-        } else if (plazo == 22) {
-            float interesanual = (float) 0.24;
+        }else if (plazo == 24 && (prestamo >= 50001 && prestamo <= 80000)) {
+            float interesanual = (float) 0.23;
             jporAnual.setText(Float.toString(interesanual));
-        } else if (plazo == 24 && (prestamo >= 50001 && prestamo <= 80000)) {
+        }else if (plazo == 26 && (prestamo >= 80001 && prestamo <= 100000)) {
             float interesanual = (float) 0.25;
             jporAnual.setText(Float.toString(interesanual));
-        } else if (plazo == 24 && (prestamo >= 80001 && prestamo <= 100000)) {
-            float interesanual = (float) 0.26;
+        }else if (plazo == 36 && (prestamo >= 100001 && prestamo <= 150000)) {
+            float interesanual = (float) 0.255;
             jporAnual.setText(Float.toString(interesanual));
-        } else {
+        }else {
             JOptionPane.showMessageDialog(null, "Sujeto a analisis");
         }
     }//GEN-LAST:event_jporAnualMouseClicked
